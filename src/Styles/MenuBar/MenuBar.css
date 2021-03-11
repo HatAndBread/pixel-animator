@@ -1,0 +1,22 @@
+.menu-bar {
+  display: flex;
+  background-color: slateblue;
+  width: calc(100vw - 6px);
+  padding: 0px;
+  border-color: #8682dd;
+  color: snow;
+  border-style: outset;
+  border-radius: 8px;
+  margin-bottom: 3px;
+}
+
+.menu-bar img {
+  transition: 0.3s;
+  margin: 0px 16px 0px 16px;
+  cursor: pointer;
+  height: 40px;
+}
+
+.menu-bar-item:hover {
+  background-color: #8682dd;
+}

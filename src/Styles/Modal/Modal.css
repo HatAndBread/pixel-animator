@@ -1,0 +1,19 @@
+.modal-container {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0px;
+  z-index: 1000;
+  background-color: rgba(50, 50, 50, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-container .modal-closer {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  cursor: pointer;
+  width: 30px;
+}

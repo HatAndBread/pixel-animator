@@ -1,0 +1,22 @@
+.toolbox-container {
+  height: 100%;
+  width: 160px;
+  background-color: slateblue;
+  border-color: #8682dd;
+  color: snow;
+  border-style: outset;
+  border-radius: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.toolbox-container img {
+  height: 40px;
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.toolbox-container img:hover {
+  background-color: #8682dd;
+}
