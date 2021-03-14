@@ -1,9 +1,17 @@
-import { useState, useEffect, useRef, useContext } from 'react';
-import { DrawingContext } from './DrawingCanvas';
+import { useContext, useEffect, useState } from 'react';
+import { GlobalContext } from '../../App';
 
-export default function Pixel({ type, x, y }) {
-  const mouseDown = useContext(DrawingContext).mouseDown;
-  const [myColor, setMyColor] = useState({});
-  const myRef = useRef();
-  return <div className={type} ref={myRef} data-x={x} data-y={y}></div>;
+function Pixel({ type, x, y, style, color }) {
+  const project = useContext(GlobalContext).currentProject;
+  const currentFrameNumber = useContext(GlobalContext).currentFrameNumber;
+  const [myStyle, setMyStyle] = useState(style);
+  useEffect(() => {
+    if (project.frames[currentFrameNumber]?.dataArr[y][x] !== 'transparent') {
+      setMyStyle({ backgroundColor: project.frames[currentFrameNumber].dataArr[y][x] });
+    }
+  }, [project, currentFrameNumber, x, y]);
+
+  return <div className={type} data-x={x} data-y={y} data-original-bg-color={color} style={myStyle}></div>;
 }
+
+export default Pixel;

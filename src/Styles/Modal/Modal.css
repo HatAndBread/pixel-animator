@@ -11,9 +11,17 @@
 }
 
 .modal-container .modal-closer {
-  position: fixed;
-  top: 24px;
-  right: 24px;
+  position: absolute;
+  right: 16px;
+  top: 16px;
   cursor: pointer;
   width: 30px;
+}
+
+.modal-box {
+  position: fixed;
+  background-color: slateblue;
+  padding: 56px 32px 32px 32px;
+  border-radius: 16px;
+  box-shadow: rgba(30, 30, 30, 0.7) 0px 0px 8px 8px;
 }

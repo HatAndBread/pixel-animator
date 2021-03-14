@@ -4,24 +4,25 @@ import fileIconPath from '../../Assets/file.png';
 import settingsIconPath from '../../Assets/setting.png';
 import undoIconPath from '../../Assets/undo.png';
 import redoIconPath from '../../Assets/redo.png';
-import { useDispatch } from 'react-redux';
-import { openSettings } from '../../Actions/';
+import { GlobalContext } from '../../App';
+import { useContext } from 'react';
 
 export default function MenuBar() {
-  const dispatch = useDispatch();
+  const context = useContext(GlobalContext);
+
   return (
     <nav className="menu-bar">
       <div className="menu-bar-item">
-        <MenuBarIcon
-          filePath={fileIconPath}
-          alt={'file'}
-          onClick={() => {
-            dispatch(openSettings());
-          }}
-        />
+        <MenuBarIcon filePath={fileIconPath} alt={'file'} />
       </div>
       <div className="menu-bar-item">
-        <MenuBarIcon filePath={settingsIconPath} alt={'settings'} />
+        <MenuBarIcon
+          filePath={settingsIconPath}
+          alt={'settings'}
+          onClick={() => {
+            context.setOpenModal('SETTINGS');
+          }}
+        />
       </div>
       <div className="menu-bar-item">
         <MenuBarIcon filePath={undoIconPath} alt={'undo'} />

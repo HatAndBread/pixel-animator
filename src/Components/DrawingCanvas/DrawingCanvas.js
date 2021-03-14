@@ -1,58 +1,151 @@
-import { useSelector } from 'react-redux';
-import { createContext, useEffect } from 'react';
-import createCanvas from './createCanvas';
-
+import { GlobalContext } from '../../App';
+import { useState, useContext, useRef, useEffect } from 'react';
+import RGBToHex from '../../Methods/RGBToHex';
+import pencilDraw from './pencilDraw';
+import eraserDraw from './eraserDraw';
 import '.././../Styles/DrawingCanvas/DrawingCanvas.css';
 
-const defaultContext = {
-  mouseDown: false
-};
-export const DrawingContext = createContext(defaultContext);
+function DrawingCanvas({ magnification }) {
+  const context = useContext(GlobalContext);
+  const color = useContext(GlobalContext).color;
+  const [mouseDown, setMouseDown] = useState(false);
+  const canvasRef = useRef(null);
+  const canvas = canvasRef.current;
+  const [ctx, setCtx] = useState(null);
+  const squares = context.squares;
+  const setSquares = context.setSquares;
 
-export default function DrawingCanvas() {
-  const canvasWidth = useSelector((state) => state.canvasWidth);
-  const canvasHeight = useSelector((state) => state.canvasHeight);
-  const currentProject = useSelector((state) => state.currentProject);
-  console.log(currentProject);
-  const canvasArray = createCanvas(canvasWidth, canvasHeight);
-  const handlePointerDown = () => {
-    DrawingContext.mouseDown = true;
-    console.log('pointer down');
+  const getTrueCoords = (coords) => {
+    return {
+      x: Math.floor(coords.x / magnification) * magnification,
+      y: Math.floor(coords.y / magnification) * magnification
+    };
   };
-  const handlePointerUp = () => {
-    DrawingContext.mouseDown = false;
-    console.log('Pointer up!');
-  };
-  const handlePointerMove = (e) => {
-    if (DrawingContext.mouseDown) {
-      console.log(e.target.dataset);
-      e.target.style.backgroundColor = 'green';
+
+  const isNotADuplicate = (newSquare) => {
+    for (let i = 0; i < squares.length; i++) {
+      if (
+        squares[i].coords.x === newSquare.coords.x &&
+        squares[i].coords.y === newSquare.coords.y &&
+        squares[i].color === newSquare.color
+      ) {
+        return false;
+      }
     }
+    return true;
   };
   useEffect(() => {
-    currentProject.addFrame(canvasArray);
-    console.log(currentProject);
-  }, [currentProject, canvasArray]);
+    setCtx(canvasRef.current.getContext('2d'));
+  }, []);
+  useEffect(() => {
+    if (canvas) {
+      console.log('HO');
+      ctx.fillStyle = 'lightgray';
+      ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+      squares.forEach((square) => {
+        ctx.fillStyle = square.color;
+        ctx.fillRect(square.coords.x, square.coords.y, magnification, magnification);
+      });
+    }
+  }, [ctx, canvas, squares, magnification]);
+
+  const handleTool = (e) => {
+    const coords = {
+      x: e.clientX - canvasRef.current.getBoundingClientRect().x,
+      y: e.clientY - canvasRef.current.getBoundingClientRect().y
+    };
+    switch (context.tool) {
+      case 'pencil': {
+        const arr = [];
+        const newCoords = getTrueCoords(coords);
+        for (let x = 0; x < context.pencilSize; x++) {
+          for (let y = 0; y < context.pencilSize; y++) {
+            const newItem = {
+              coords: { x: newCoords.x + magnification * x, y: newCoords.y + magnification * y },
+              color: color
+            };
+            if (isNotADuplicate(newItem)) {
+              arr.push(newItem);
+            }
+          }
+        }
+        const copy = [...squares];
+        arr.forEach((item) => {
+          copy.push(item);
+        });
+        setSquares(copy);
+        break;
+      }
+      case 'eraser': {
+        const eraserCoords = getTrueCoords(coords);
+        for (let x = 0; x < context.pencilSize; x++) {
+          for (let y = 0; y < context.pencilSize; y++) {
+            for (let i = 0; i < squares.length; i++) {
+              if (
+                squares[i]?.coords.x === eraserCoords.x + x * magnification &&
+                squares[i]?.coords.y === eraserCoords.y + y * magnification
+              ) {
+                squares.splice(i, 1);
+                console.log(squares);
+              }
+            }
+          }
+        }
+        setSquares(JSON.parse(JSON.stringify(squares)));
+        break;
+      }
+      case 'dropper': {
+        //const color = RGBToHex(e.target.style.backgroundColor);
+        // if (color) {
+        //context.setColor(color);
+        //}
+        return;
+      }
+      case 'bucket': {
+        console.log(context.tool);
+        return;
+      }
+      case 'scissors': {
+        console.log(context.tool);
+        return;
+      }
+      case 'zoom in': {
+        console.log('zoom in');
+        return;
+      }
+      default:
+        return;
+    }
+  };
+  const handlePointerDown = (e) => {
+    setMouseDown(true);
+    handleTool(e);
+  };
+  const handlePointerUp = () => {
+    setMouseDown(false);
+  };
+  const handlePointerMove = (e) => {
+    if (mouseDown) {
+      handleTool(e);
+    }
+  };
+  const handleTouchMove = (e) => {
+    handlePointerMove({ target: document.elementFromPoint(e.touches[0].clientX, e.touches[0].clientY) });
+  };
   return (
-    <DrawingContext.Provider value={defaultContext}>
-      <div
-        className="drawing-canvas-container"
-        key={Math.random()}
+    <div className="drawing-canvas-container">
+      <canvas
+        width={context.width * magnification}
+        height={context.height * magnification}
+        ref={canvasRef}
         onPointerDown={handlePointerDown}
         onPointerUp={handlePointerUp}
         onPointerLeave={handlePointerUp}
         onPointerMove={handlePointerMove}
-      >
-        {canvasArray.map((row) => {
-          return (
-            <div className="drawing-canvas-row" key={Math.random()}>
-              {row.map((el) => {
-                return el;
-              })}
-            </div>
-          );
-        })}
-      </div>
-    </DrawingContext.Provider>
+        onTouchMove={handleTouchMove}
+      ></canvas>
+    </div>
   );
 }
+
+export default DrawingCanvas;

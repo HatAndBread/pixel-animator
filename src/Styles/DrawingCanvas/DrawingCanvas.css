@@ -1,24 +1,11 @@
 .drawing-canvas-container {
-  width: 400px;
-  height: 400px;
-  background-color: pink;
-  display: flex;
-  flex-direction: column;
+  touch-action: none;
   user-select: none;
-}
-.bg-light-transparent {
-  flex-grow: 1;
   background-color: lightgray;
 }
 
-.bg-dark-transparent {
+.drawing-canvas-container canvas {
   flex-grow: 1;
-  background-color: darkgrey;
-}
-
-.drawing-canvas-row {
-  display: flex;
-  width: 100%;
-  flex-grow: 1;
-  background-color: red;
+  touch-action: none;
+  user-select: none;
 }
