@@ -1,11 +1,21 @@
 .drawing-canvas-container {
   touch-action: none;
   user-select: none;
-  background-color: lightgray;
+  position: relative;
 }
 
-.drawing-canvas-container canvas {
-  flex-grow: 1;
+.drawing-canvas-container #drawing-canvas {
   touch-action: none;
   user-select: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.drawing-canvas-container　#bg-canvas {
+  touch-action: none;
+  user-select: none;
+  position: absolute;
+  top: 0;
+  left: 0;
 }

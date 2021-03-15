@@ -1,8 +1,6 @@
 import { GlobalContext } from '../../App';
 import { useState, useContext, useRef, useEffect } from 'react';
-import RGBToHex from '../../Methods/RGBToHex';
-import pencilDraw from './pencilDraw';
-import eraserDraw from './eraserDraw';
+import BGCanvas from './BGCanvas';
 import '.././../Styles/DrawingCanvas/DrawingCanvas.css';
 
 function DrawingCanvas({ magnification }) {
@@ -39,8 +37,7 @@ function DrawingCanvas({ magnification }) {
   }, []);
   useEffect(() => {
     if (canvas) {
-      console.log('HO');
-      ctx.fillStyle = 'lightgray';
+      ctx.fillStyle = 'transparent';
       ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
       squares.forEach((square) => {
         ctx.fillStyle = square.color;
@@ -64,16 +61,29 @@ function DrawingCanvas({ magnification }) {
               coords: { x: newCoords.x + magnification * x, y: newCoords.y + magnification * y },
               color: color
             };
-            if (isNotADuplicate(newItem)) {
+            if (
+              isNotADuplicate(newItem) &&
+              newCoords.x / magnification + x <= context.width &&
+              newCoords.y / magnification + y <= context.height
+            ) {
               arr.push(newItem);
             }
           }
         }
-        const copy = [...squares];
-        arr.forEach((item) => {
-          copy.push(item);
-        });
-        setSquares(copy);
+        const copy = JSON.parse(JSON.stringify(squares));
+        if (arr.length) {
+          arr.forEach((item) => {
+            for (let i = copy.length; i >= 0; i--) {
+              if (copy[i]?.coords.x === item.coords.x && copy[i]?.coords.y === item.coords.y) {
+                copy.splice(i, 1);
+              }
+            }
+          });
+          arr.forEach((item) => {
+            copy.push(item);
+          });
+          setSquares(copy);
+        }
         break;
       }
       case 'eraser': {
@@ -86,7 +96,7 @@ function DrawingCanvas({ magnification }) {
                 squares[i]?.coords.y === eraserCoords.y + y * magnification
               ) {
                 squares.splice(i, 1);
-                console.log(squares);
+                break;
               }
             }
           }
@@ -95,10 +105,14 @@ function DrawingCanvas({ magnification }) {
         break;
       }
       case 'dropper': {
-        //const color = RGBToHex(e.target.style.backgroundColor);
-        // if (color) {
-        //context.setColor(color);
-        //}
+        const dropperCoords = getTrueCoords(coords);
+        for (let i = 0; i < squares.length; i++) {
+          if (squares[i].coords.x === dropperCoords.x && squares[i].coords.y === dropperCoords.y) {
+            console.log(squares[i].color);
+            context.setColor(squares[i].color);
+            break;
+          }
+        }
         return;
       }
       case 'bucket': {
@@ -134,7 +148,9 @@ function DrawingCanvas({ magnification }) {
   };
   return (
     <div className="drawing-canvas-container">
+      <BGCanvas width={context.width} height={context.height} magnification={magnification} />
       <canvas
+        id="drawing-canvas"
         width={context.width * magnification}
         height={context.height * magnification}
         ref={canvasRef}
