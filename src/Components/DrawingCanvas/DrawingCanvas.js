@@ -32,19 +32,20 @@ function DrawingCanvas({ magnification }) {
     }
     return true;
   };
+
   useEffect(() => {
     setCtx(canvasRef.current.getContext('2d'));
   }, []);
+
   useEffect(() => {
     if (canvas) {
-      ctx.fillStyle = 'transparent';
-      ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+      ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
       squares.forEach((square) => {
         ctx.fillStyle = square.color;
         ctx.fillRect(square.coords.x, square.coords.y, magnification, magnification);
       });
     }
-  }, [ctx, canvas, squares, magnification]);
+  }, [ctx, canvas, squares, magnification, context.height, context.width]);
 
   const handleTool = (e) => {
     const coords = {
@@ -88,20 +89,21 @@ function DrawingCanvas({ magnification }) {
       }
       case 'eraser': {
         const eraserCoords = getTrueCoords(coords);
+        const copy = JSON.parse(JSON.stringify(squares));
         for (let x = 0; x < context.pencilSize; x++) {
           for (let y = 0; y < context.pencilSize; y++) {
-            for (let i = 0; i < squares.length; i++) {
+            for (let i = 0; i < copy.length; i++) {
               if (
-                squares[i]?.coords.x === eraserCoords.x + x * magnification &&
-                squares[i]?.coords.y === eraserCoords.y + y * magnification
+                copy[i]?.coords.x === eraserCoords.x + x * magnification &&
+                copy[i]?.coords.y === eraserCoords.y + y * magnification
               ) {
-                squares.splice(i, 1);
+                copy.splice(i, 1);
                 break;
               }
             }
           }
         }
-        setSquares(JSON.parse(JSON.stringify(squares)));
+        setSquares(copy);
         break;
       }
       case 'dropper': {
