@@ -10,6 +10,7 @@ export const GlobalContext = createContext();
 
 function App() {
   const [color, setColor] = useState('#000000');
+  const [frames, setFrames] = [];
   const [currentFrameNumber, setCurrentFrameNumber] = useState(0);
   const [width, setWidth] = useState(32);
   const [height, setHeight] = useState(32);
@@ -24,6 +25,8 @@ function App() {
       value={{
         color,
         setColor,
+        frames,
+        setFrames,
         currentFrameNumber,
         setCurrentFrameNumber,
         width,

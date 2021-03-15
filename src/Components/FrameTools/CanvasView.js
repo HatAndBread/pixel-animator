@@ -1,13 +1,19 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
+import { GlobalContext } from '../../App';
+import { useContext } from 'react';
 
-export default function CanvasView({ width, height }) {
+export default function CanvasView({ width, height, num }) {
   const canvasRef = useRef();
+  const [ctx, setCtx] = useState(null);
+  const context = useContext(GlobalContext);
 
   useEffect(() => {
-    const can = canvasRef.current;
-    if (can) {
-      console.log(can);
-    }
+    setCtx(canvasRef.current.getContext('2d'));
   }, []);
+
+  useEffect(() => {
+    if (ctx) {
+    }
+  }, [context.frames, ctx]);
   return <canvas width={width} height={height} ref={canvasRef}></canvas>;
 }

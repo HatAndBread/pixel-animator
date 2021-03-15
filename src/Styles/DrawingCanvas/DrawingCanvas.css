@@ -2,6 +2,10 @@
   touch-action: none;
   user-select: none;
   position: relative;
+  max-height: 90vh;
+  max-width: calc(95vw - 350px);
+  overflow-y: scroll;
+  overflow-x: scroll;
 }
 
 .drawing-canvas-container #drawing-canvas {
