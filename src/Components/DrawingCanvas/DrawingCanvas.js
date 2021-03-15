@@ -3,12 +3,13 @@ import { useState, useContext, useRef, useEffect } from 'react';
 import BGCanvas from './BGCanvas';
 import '.././../Styles/DrawingCanvas/DrawingCanvas.css';
 
+let lastMagnification;
+
 function DrawingCanvas({ magnification }) {
   const context = useContext(GlobalContext);
   const color = useContext(GlobalContext).color;
   const [mouseDown, setMouseDown] = useState(false);
   const canvasRef = useRef(null);
-  const canvas = canvasRef.current;
   const [ctx, setCtx] = useState(null);
   const squares = context.squares;
   const setSquares = context.setSquares;
@@ -38,14 +39,23 @@ function DrawingCanvas({ magnification }) {
   }, []);
 
   useEffect(() => {
-    if (canvas) {
-      ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-      squares.forEach((square) => {
-        ctx.fillStyle = square.color;
-        ctx.fillRect(square.coords.x, square.coords.y, magnification, magnification);
-      });
+    if (ctx) {
+      if (lastMagnification !== magnification) {
+        squares.forEach((square) => {
+          square.coords.x = square.coords.x * (magnification / lastMagnification);
+          square.coords.y = square.coords.y * (magnification / lastMagnification);
+        });
+        setSquares(JSON.parse(JSON.stringify(squares)));
+        lastMagnification = magnification;
+      } else {
+        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        squares.forEach((square) => {
+          ctx.fillStyle = square.color;
+          ctx.fillRect(square.coords.x, square.coords.y, magnification, magnification);
+        });
+      }
     }
-  }, [ctx, canvas, squares, magnification, context.height, context.width]);
+  }, [ctx, squares, setSquares, magnification, context.height, context.width]);
 
   const handleTool = (e) => {
     const coords = {

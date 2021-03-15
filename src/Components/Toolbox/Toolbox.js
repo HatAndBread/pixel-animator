@@ -4,8 +4,8 @@ import pencilIconPath from '../../Assets/pencil.png';
 import eraserIconPath from '../../Assets/eraser.png';
 import dropperIconPath from '../../Assets/dropper.png';
 import bucketIconPath from '../../Assets/paint-bucket.png';
-import scissorsIconPath from '../../Assets/scissors.png';
-import magnifyingGlassIconPath from '../../Assets/magnifying-glass.png';
+import zoomInIconPath from '../../Assets/zoom-in.png';
+import zoomOutIconPath from '../../Assets/zoom-out.png';
 import SizeChooser from './SizeChooser';
 import { GlobalContext } from '../../App';
 import { useContext } from 'react';
@@ -30,8 +30,16 @@ export default function Toolbox() {
       <ToolboxIcon src={eraserIconPath} alt={'eraser'} onClick={() => setTool('eraser')} />
       <ToolboxIcon src={dropperIconPath} alt={'dropper'} onClick={() => setTool('dropper')} />
       <ToolboxIcon src={bucketIconPath} alt={'bucket'} onClick={() => setTool('bucket')} />
-      <ToolboxIcon src={scissorsIconPath} alt={'scissors'} onClick={() => setTool('scissors')} />
-      <ToolboxIcon src={magnifyingGlassIconPath} alt={'zoom in'} onClick={() => setTool('zoom in')} />
+      <ToolboxIcon
+        src={zoomInIconPath}
+        alt={'zoom in'}
+        onClick={() => context.setMagnification(context.magnification + 1)}
+      />
+      <ToolboxIcon
+        src={zoomOutIconPath}
+        alt={'zoom out'}
+        onClick={() => context.setMagnification(context.magnification - 1)}
+      />
     </div>
   );
 }
