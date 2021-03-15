@@ -41,11 +41,12 @@ function DrawingCanvas({ magnification }) {
   useEffect(() => {
     if (ctx) {
       if (lastMagnification !== magnification) {
-        squares.forEach((square) => {
-          square.coords.x = square.coords.x * (magnification / lastMagnification);
-          square.coords.y = square.coords.y * (magnification / lastMagnification);
-        });
-        setSquares(JSON.parse(JSON.stringify(squares)));
+        const copy = JSON.parse(JSON.stringify(squares));
+        for (let i = 0; i < copy.length; i++) {
+          copy[i].coords.x = copy[i].coords.x * (magnification / lastMagnification);
+          copy[i].coords.y = copy[i].coords.y * (magnification / lastMagnification);
+        }
+        setSquares(copy);
         lastMagnification = magnification;
       } else {
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
@@ -104,6 +105,7 @@ function DrawingCanvas({ magnification }) {
           for (let y = 0; y < context.pencilSize; y++) {
             for (let i = 0; i < copy.length; i++) {
               if (
+                // work to be done in the logic here
                 copy[i]?.coords.x === eraserCoords.x + x * magnification &&
                 copy[i]?.coords.y === eraserCoords.y + y * magnification
               ) {
