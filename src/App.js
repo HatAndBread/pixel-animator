@@ -4,9 +4,7 @@ import Toolbox from './Components/Toolbox/Toolbox';
 import Modals from './Components/Modal/Modals';
 import DrawingCanvas from './Components/DrawingCanvas/DrawingCanvas';
 import FrameTools from './Components/FrameTools/FrameTools';
-import Project from './Models/Project';
-import createCanvas from './Components/DrawingCanvas/createCanvas';
-import { createContext, useState, useEffect, useMemo } from 'react';
+import { createContext, useState } from 'react';
 
 export const GlobalContext = createContext();
 
@@ -20,7 +18,6 @@ function App() {
   const [magnification, setMagnification] = useState(10);
   const [openModal, setOpenModal] = useState(null);
   const [squares, setSquares] = useState([]);
-  const [currentProject, setCurrentProject] = useState(new Project({ width: 32, height: 32 }));
 
   return (
     <GlobalContext.Provider
@@ -39,8 +36,6 @@ function App() {
         setPencilSize,
         openModal,
         setOpenModal,
-        currentProject,
-        setCurrentProject,
         magnification,
         setMagnification,
         squares,

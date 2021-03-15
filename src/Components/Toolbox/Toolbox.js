@@ -38,7 +38,11 @@ export default function Toolbox() {
       <ToolboxIcon
         src={zoomOutIconPath}
         alt={'zoom out'}
-        onClick={() => context.setMagnification(context.magnification - 1)}
+        onClick={() => {
+          if (context.magnification > 1) {
+            context.setMagnification(context.magnification - 1);
+          }
+        }}
       />
     </div>
   );
