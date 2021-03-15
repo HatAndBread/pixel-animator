@@ -106,8 +106,8 @@ function DrawingCanvas({ magnification }) {
             for (let i = 0; i < copy.length; i++) {
               if (
                 // work to be done in the logic here
-                copy[i]?.coords.x === eraserCoords.x + x * magnification &&
-                copy[i]?.coords.y === eraserCoords.y + y * magnification
+                Math.round(copy[i]?.coords.x) === Math.round(eraserCoords.x + x * magnification) &&
+                Math.round(copy[i]?.coords.y) === Math.round(eraserCoords.y + y * magnification)
               ) {
                 copy.splice(i, 1);
                 break;
