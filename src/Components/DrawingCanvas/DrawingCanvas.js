@@ -40,22 +40,21 @@ function DrawingCanvas({ magnification }) {
 
   useEffect(() => {
     if (ctx) {
-      if (lastMagnification !== magnification) {
-        const copy = JSON.parse(JSON.stringify(squares));
-        for (let i = 0; i < copy.length; i++) {
-          copy[i].coords.x = copy[i].coords.x * (magnification / lastMagnification);
-          copy[i].coords.y = copy[i].coords.y * (magnification / lastMagnification);
-        }
-        setSquares(copy);
-        lastMagnification = magnification;
-      } else {
-        console.log('context.frames!');
-        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-        squares.forEach((square) => {
-          ctx.fillStyle = square.color;
-          ctx.fillRect(square.coords.x, square.coords.y, magnification, magnification);
-        });
-      }
+      // if (lastMagnification !== magnification) {
+      //   lastMagnification = magnification;
+      //   const copy = JSON.parse(JSON.stringify(squares));
+      //   for (let i = 0; i < copy.length; i++) {
+      //     copy[i].coords.x = copy[i].coords.x * (magnification / lastMagnification);
+      //     copy[i].coords.y = copy[i].coords.y * (magnification / lastMagnification);
+      //   }
+      //   setSquares(copy);
+      // } else {
+      ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+      squares.forEach((square) => {
+        ctx.fillStyle = square.color;
+        ctx.fillRect(square.coords.x, square.coords.y, magnification, magnification);
+      });
+      // }
     }
   }, [ctx, squares, setSquares, magnification, context.height, context.width]);
 
@@ -162,19 +161,22 @@ function DrawingCanvas({ magnification }) {
     handlePointerMove({ target: document.elementFromPoint(e.touches[0].clientX, e.touches[0].clientY) });
   };
   return (
-    <div className="drawing-canvas-container">
-      <BGCanvas width={context.width} height={context.height} magnification={magnification} />
-      <canvas
-        id="drawing-canvas"
-        width={context.width * magnification}
-        height={context.height * magnification}
-        ref={canvasRef}
-        onPointerDown={handlePointerDown}
-        onPointerUp={handlePointerUp}
-        onPointerLeave={handlePointerUp}
-        onPointerMove={handlePointerMove}
-        onTouchMove={handleTouchMove}
-      ></canvas>
+    <div>
+      <div className="drawing-canvas-current-frame-number">Frame: {context.currentFrameNumber}</div>
+      <div className="drawing-canvas-container">
+        <BGCanvas width={context.width} height={context.height} magnification={magnification} />
+        <canvas
+          id="drawing-canvas"
+          width={context.width * magnification}
+          height={context.height * magnification}
+          ref={canvasRef}
+          onPointerDown={handlePointerDown}
+          onPointerUp={handlePointerUp}
+          onPointerLeave={handlePointerUp}
+          onPointerMove={handlePointerMove}
+          onTouchMove={handleTouchMove}
+        ></canvas>
+      </div>
     </div>
   );
 }

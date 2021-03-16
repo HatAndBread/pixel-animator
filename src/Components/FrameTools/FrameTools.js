@@ -22,11 +22,13 @@ export default function FrameTools() {
       <div>
         <img src={addFrameIcon} alt="ADD NEW FRAME" id="add-new-frame" onClick={addNewFrame} />
       </div>
-      {context.frames.map((frame, index) => {
-        return (
-          <CanvasView width={context.width} height={context.height} frameData={frame} key={index} frameNum={index} />
-        );
-      })}
+      <div className="frame-tools-container-frames">
+        {context.frames.map((frame, index) => {
+          return (
+            <CanvasView width={context.width} height={context.height} frameData={frame} key={index} frameNum={index} />
+          );
+        })}
+      </div>
     </div>
   );
 }

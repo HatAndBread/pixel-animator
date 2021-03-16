@@ -8,6 +8,12 @@
   display: flex;
   flex-direction: column;
 }
+.frame-tools-container-frames {
+  overflow-y: scroll;
+  border-top-style: groove;
+  border-top-width: 6px;
+  border-top-color: #8682dd;
+}
 
 .frame-tools-container img {
   cursor: pointer;
@@ -50,10 +56,6 @@
   width: 100%;
   margin: 8px;
   justify-content: space-evenly;
-}
-
-.frame-tools-container {
-  overflow-y: scroll;
 }
 
 .delete-duplicate-container {

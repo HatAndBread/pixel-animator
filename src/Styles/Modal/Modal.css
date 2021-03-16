@@ -25,3 +25,19 @@
   border-radius: 16px;
   box-shadow: rgba(30, 30, 30, 0.7) 0px 0px 8px 8px;
 }
+
+.modal-container button {
+  border-radius: 8px;
+  padding: 8px;
+  margin: 8px;
+  background-color: snow;
+  font-family: inherit;
+  color: black;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.modal-container button:hover {
+  background-color: red;
+  color: snow;
+}

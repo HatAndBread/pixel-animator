@@ -1,13 +1,17 @@
 import '../../Styles/Modal/Modal.css';
 import cancelIconPath from '../../Assets/cancel.png';
 import { GlobalContext } from '../../App';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 
 export default function Modal({ content, hidden }) {
   const context = useContext(GlobalContext);
+  const setModalCallbacks = context.setModalCallbacks;
   const onClose = () => {
     context.setOpenModal(null);
   };
+  useEffect(() => {
+    return () => setModalCallbacks({});
+  }, [setModalCallbacks]);
   return (
     <div>
       {!hidden && (

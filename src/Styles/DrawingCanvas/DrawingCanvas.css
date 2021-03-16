@@ -23,3 +23,10 @@
   top: 0;
   left: 0;
 }
+
+.drawing-canvas-current-frame-number {
+  display: flex;
+  justify-content: center;
+  color: black;
+  font-size: 22px;
+}

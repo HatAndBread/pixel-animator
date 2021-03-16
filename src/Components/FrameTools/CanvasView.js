@@ -34,6 +34,11 @@ export default function CanvasView({ width, height, frameData, frameNum }) {
     context.setSquares(context.frames[frameNum]);
   };
 
+  const reallyDelete = () => {
+    context.setOpenModal('DELETE');
+    context.setModalCallbacks({ delete: destroy });
+  };
+
   const destroy = () => {
     if (context.currentFrameNumber) {
       setDeleted();
@@ -67,7 +72,7 @@ export default function CanvasView({ width, height, frameData, frameNum }) {
           </div>
         </div>
         <div className="delete-duplicate-container">
-          <img src={trashCanIcon} alt="DELETE" height="32" onClick={destroy} />
+          <img src={trashCanIcon} alt="DELETE" height="32" onClick={reallyDelete} />
           <img src={cloneIcon} alt="DUPLICATE" height="32" onClick={duplicate} />
         </div>
       </div>

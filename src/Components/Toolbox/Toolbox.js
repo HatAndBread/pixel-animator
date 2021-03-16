@@ -9,6 +9,7 @@ import zoomOutIconPath from '../../Assets/zoom-out.png';
 import SizeChooser from './SizeChooser';
 import { GlobalContext } from '../../App';
 import { useContext } from 'react';
+import { setDeleted } from '../../App';
 
 export default function Toolbox() {
   const context = useContext(GlobalContext);
@@ -17,6 +18,26 @@ export default function Toolbox() {
   };
   const handleChange = (e) => {
     context.setColor(e.target.value);
+  };
+  const handleMagnification = (num, out) => {
+    const arr = [];
+    if (out && context.magnification <= 1) {
+    } else {
+      for (let i = 0; i < context.frames.length; i++) {
+        const copy = JSON.parse(JSON.stringify(context.frames[i]));
+        for (let j = 0; j < copy.length; j++) {
+          console.log(copy[j].coords);
+          copy[j].coords.x = (copy[j].coords.x * (context.magnification + num)) / context.magnification;
+          copy[j].coords.y = (copy[j].coords.y * (context.magnification + num)) / context.magnification;
+        }
+        arr.push(copy);
+      }
+
+      //console.log(arr, context.frames);
+      context.setFrames(arr);
+      context.setMagnification(context.magnification + num);
+      setDeleted();
+    }
   };
 
   return (
@@ -30,20 +51,8 @@ export default function Toolbox() {
       <ToolboxIcon src={eraserIconPath} alt={'eraser'} onClick={() => setTool('eraser')} />
       <ToolboxIcon src={dropperIconPath} alt={'dropper'} onClick={() => setTool('dropper')} />
       <ToolboxIcon src={bucketIconPath} alt={'bucket'} onClick={() => setTool('bucket')} />
-      <ToolboxIcon
-        src={zoomInIconPath}
-        alt={'zoom in'}
-        onClick={() => context.setMagnification(context.magnification + 1)}
-      />
-      <ToolboxIcon
-        src={zoomOutIconPath}
-        alt={'zoom out'}
-        onClick={() => {
-          if (context.magnification > 1) {
-            context.setMagnification(context.magnification - 1);
-          }
-        }}
-      />
+      <ToolboxIcon src={zoomInIconPath} alt={'zoom in'} onClick={() => handleMagnification(1)} />
+      <ToolboxIcon src={zoomOutIconPath} alt={'zoom out'} onClick={() => handleMagnification(-1, 'out')} />
     </div>
   );
 }

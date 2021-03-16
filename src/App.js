@@ -22,9 +22,11 @@ function App() {
   const [pencilSize, setPencilSize] = useState(1);
   const [magnification, setMagnification] = useState(10);
   const [openModal, setOpenModal] = useState(null);
+  const [modalCallbacks, setModalCallbacks] = useState({});
   const [squares, setSquares] = useState([]);
 
   useEffect(() => {
+    console.log('HI!');
     if (del || dup) {
       del = 0;
       dup = 0;
@@ -36,10 +38,6 @@ function App() {
     }
     set = 0;
   }, [squares, frames, currentFrameNumber]);
-
-  useEffect(() => {
-    console.log(frames);
-  }, [frames]);
 
   return (
     <GlobalContext.Provider
@@ -60,6 +58,8 @@ function App() {
         setPencilSize,
         openModal,
         setOpenModal,
+        modalCallbacks,
+        setModalCallbacks,
         magnification,
         setMagnification,
         squares,
@@ -96,4 +96,5 @@ export const setDeleted = () => {
 export const setDuplicated = () => {
   dup = 1;
 };
+
 export default App;
