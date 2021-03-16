@@ -4,13 +4,15 @@ import Toolbox from './Components/Toolbox/Toolbox';
 import Modals from './Components/Modal/Modals';
 import DrawingCanvas from './Components/DrawingCanvas/DrawingCanvas';
 import FrameTools from './Components/FrameTools/FrameTools';
-import { createContext, useState } from 'react';
+import { createContext, useState, useEffect } from 'react';
 
 export const GlobalContext = createContext();
 
+let set = 0;
+
 function App() {
   const [color, setColor] = useState('#000000');
-  const [frames, setFrames] = [];
+  const [frames, setFrames] = useState([[]]);
   const [currentFrameNumber, setCurrentFrameNumber] = useState(0);
   const [width, setWidth] = useState(32);
   const [height, setHeight] = useState(32);
@@ -19,6 +21,20 @@ function App() {
   const [magnification, setMagnification] = useState(10);
   const [openModal, setOpenModal] = useState(null);
   const [squares, setSquares] = useState([]);
+
+  useEffect(() => {
+    if (!set) {
+      frames[currentFrameNumber] = squares;
+      console.log('HO!', frames);
+      setFrames(frames);
+      set = 1;
+    }
+    set = 0;
+  }, [squares, frames, currentFrameNumber]);
+
+  useEffect(() => {
+    console.log(frames);
+  }, [frames]);
 
   return (
     <GlobalContext.Provider

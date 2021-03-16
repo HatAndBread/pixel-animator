@@ -8,3 +8,60 @@
   display: flex;
   flex-direction: column;
 }
+
+.frame-tools-container img {
+  cursor: pointer;
+  width: 32px;
+}
+
+.canvas-view {
+  width: initial;
+  cursor: pointer;
+}
+
+.canvas-view-number-label {
+  text-align: center;
+}
+
+#add-new-frame {
+  cursor: pointer;
+  width: 32px;
+  transition: 0.3s;
+}
+
+#add-new-frame:hover {
+  background-color: #8682dd;
+  border-radius: 8px;
+}
+
+.canvas-view-container {
+  border-radius: 8px;
+  transition: 0.3s;
+  padding: 8px;
+}
+
+.animation-viewer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.animation-viewer-buttons {
+  display: flex;
+  width: 100%;
+  margin: 8px;
+  justify-content: space-evenly;
+}
+
+.frame-tools-container {
+  overflow-y: scroll;
+}
+
+.delete-duplicate-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.delete-duplicate-container img {
+  margin: 8px;
+}
