@@ -4,7 +4,6 @@ import BGCanvas from './BGCanvas';
 import '.././../Styles/DrawingCanvas/DrawingCanvas.css';
 
 let lastMagnification;
-let framesUpdated = 0;
 
 function DrawingCanvas({ magnification }) {
   const context = useContext(GlobalContext);
@@ -13,7 +12,6 @@ function DrawingCanvas({ magnification }) {
   const canvasRef = useRef(null);
   const [ctx, setCtx] = useState(null);
   const squares = context.squares;
-  const currentFrameNumber = context.currentFrameNumber;
   const setSquares = context.setSquares;
 
   const getTrueCoords = (coords) => {

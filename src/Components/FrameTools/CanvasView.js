@@ -1,6 +1,8 @@
 import { useRef, useEffect, useState } from 'react';
 import { GlobalContext } from '../../App';
 import { useContext } from 'react';
+import { setDeleted } from '../../App';
+import { setDuplicated } from '../../App';
 import '../../Styles/FrameTools/FrameTools.css';
 import trashCanIcon from '../../Assets/trash-can.png';
 import cloneIcon from '../../Assets/cloning.png';
@@ -33,15 +35,22 @@ export default function CanvasView({ width, height, frameData, frameNum }) {
   };
 
   const destroy = () => {
-    const copy = JSON.parse(JSON.stringify(context.frames));
-    copy.splice(frameNum, 1);
-    console.log(copy);
-    context.setFrames(copy);
+    if (context.currentFrameNumber) {
+      setDeleted();
+      context.setCurrentFrameNumber(context.currentFrameNumber - 1 ? context.currentFrameNumber - 1 : 0);
+      const copy = JSON.parse(JSON.stringify(context.frames));
+      copy.splice(frameNum, 1);
+      context.setFrames(copy);
+    } else {
+      context.setFrames([[]]);
+      context.setSquares([]);
+    }
   };
 
   const duplicate = () => {
     const copy = JSON.parse(JSON.stringify(context.frames));
     copy.splice(frameNum, 0, context.frames[frameNum]);
+    setDuplicated();
     context.setFrames(copy);
   };
 

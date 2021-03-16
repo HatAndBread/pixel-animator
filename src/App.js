@@ -9,6 +9,8 @@ import { createContext, useState, useEffect } from 'react';
 export const GlobalContext = createContext();
 
 let set = 0;
+let del = 0;
+let dup = 0;
 
 function App() {
   const [color, setColor] = useState('#000000');
@@ -23,9 +25,12 @@ function App() {
   const [squares, setSquares] = useState([]);
 
   useEffect(() => {
-    if (!set) {
+    if (del || dup) {
+      del = 0;
+      dup = 0;
+      setSquares(frames[currentFrameNumber]);
+    } else if (!set) {
       frames[currentFrameNumber] = squares;
-      console.log('HO!', frames);
       setFrames(frames);
       set = 1;
     }
@@ -84,4 +89,11 @@ function App() {
   );
 }
 
+export const setDeleted = () => {
+  del = 1;
+};
+
+export const setDuplicated = () => {
+  dup = 1;
+};
 export default App;
