@@ -16,6 +16,11 @@
   top: 16px;
   cursor: pointer;
   width: 30px;
+  transition: 0.3s;
+}
+
+.modal-closer:hover {
+  width: 40px;
 }
 
 .modal-box {
