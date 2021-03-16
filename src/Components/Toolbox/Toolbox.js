@@ -26,7 +26,6 @@ export default function Toolbox() {
       for (let i = 0; i < context.frames.length; i++) {
         const copy = JSON.parse(JSON.stringify(context.frames[i]));
         for (let j = 0; j < copy.length; j++) {
-          console.log(copy[j].coords);
           copy[j].coords.x = (copy[j].coords.x * (context.magnification + num)) / context.magnification;
           copy[j].coords.y = (copy[j].coords.y * (context.magnification + num)) / context.magnification;
         }

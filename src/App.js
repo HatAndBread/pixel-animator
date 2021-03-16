@@ -26,7 +26,6 @@ function App() {
   const [squares, setSquares] = useState([]);
 
   useEffect(() => {
-    console.log('HI!');
     if (del || dup) {
       del = 0;
       dup = 0;
