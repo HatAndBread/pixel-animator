@@ -4,6 +4,7 @@ import { GlobalContext } from '../../App';
 
 export default function DeleteModal() {
   const context = useContext(GlobalContext);
+
   const modalContent = (
     <div>
       <div className="text-content">Do you really want to delete this frame?</div>

@@ -13,7 +13,13 @@ export default function MenuBar() {
   return (
     <nav className="menu-bar">
       <div className="menu-bar-item">
-        <MenuBarIcon filePath={fileIconPath} alt={'file'} />
+        <MenuBarIcon
+          filePath={fileIconPath}
+          alt={'file'}
+          onClick={() => {
+            context.setOpenModal('SAVE');
+          }}
+        />
       </div>
       <div className="menu-bar-item">
         <MenuBarIcon

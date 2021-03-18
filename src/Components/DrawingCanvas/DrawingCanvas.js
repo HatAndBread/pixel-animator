@@ -1,5 +1,6 @@
 import { GlobalContext } from '../../App';
 import { useState, useContext, useRef, useEffect } from 'react';
+import floodFill from './floodFill';
 import BGCanvas from './BGCanvas';
 import '.././../Styles/DrawingCanvas/DrawingCanvas.css';
 
@@ -117,58 +118,12 @@ function DrawingCanvas({ magnification }) {
         return;
       }
       case 'bucket': {
-        const seed = getTrueCoords(coords);
-        const seedX = seed.x / magnification;
-        const seedY = seed.y / magnification;
-        const grid = new Array(context.height);
-        for (let i = 0; i < grid.length; i++) {
-          grid[i] = new Array(context.width);
-          for (let j = 0; j < grid[i].length; j++) {
-            grid[i][j] = { coords: { x: j * magnification, y: i * magnification }, color: null };
-          }
-        }
-        squares.forEach((square) => {
-          grid[square.coords.y / magnification][square.coords.x / magnification] = square;
-        });
-        // const newArr = new Array(context.width * context.height);
-        // squares.forEach((square) => {
-        //   newArr[square.coords.x / magnification + (square.coords.y / magnification) * context.width] = square;
-        // });
-        grid[seedY][seedX].checked = true;
-        const seedColor = grid[seedY][seedX].color;
-        const queue = [grid[seedY][seedX]];
-        console.log(queue);
-        while (queue.length) {
-          const firstX = queue[0].coords.x / magnification;
-          const firstY = queue[0].coords.y / magnification;
-          const north = grid[firstY - 1] ? grid[firstY - 1][firstX] : null;
-          const south = grid[firstY + 1] ? grid[firstY + 1][firstX] : null;
-          const east = grid[firstX + 1] ? grid[firstY][firstX + 1] : null;
-          const west = grid[firstX - 1] ? grid[firstY][firstX - 1] : null;
-          if (north?.color === seedColor && !north.checked) {
-            north.checked = true;
-            queue.push(north);
-          }
-          if (south?.color === seedColor && !south.checked) {
-            south.checked = true;
-            queue.push(south);
-            console.log('SOUTH IS A MATCH');
-          }
-          if (east?.color === seedColor && !east.checked) {
-            east.checked = true;
-            queue.push(east);
-            console.log('EAST IS A MATCH');
-          }
-          if (west?.color === seedColor && !west.checked) {
-            west.checked = true;
-            queue.push(west);
-            console.log('WEST IS A MATCH');
-          }
-          queue.splice(0, 1);
-          console.log(queue);
-          //queue.splice(0, queue.length);
-        }
-        console.log(queue);
+        const newSquares = floodFill(getTrueCoords, coords, magnification, context, squares, color);
+        setSquares(newSquares);
+        const copy = JSON.parse(JSON.stringify(context.frames));
+        copy[context.currentFrameNumber] = newSquares;
+        console.log(copy);
+        context.setFrames(copy);
         return;
       }
       case 'scissors': {

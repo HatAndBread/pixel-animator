@@ -32,7 +32,7 @@ export default function AnimationViewer() {
         ctx.fillRect((square.coords.x / magnification) * 2, (square.coords.y / magnification) * 2, 2, 2);
       });
     }
-  }, [firstImage, ctx, height, width, magnification]);
+  }, [firstImage, ctx, height, width, magnification, context]);
 
   const play = () => {
     if (animationStopped) {

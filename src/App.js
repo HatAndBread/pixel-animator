@@ -24,6 +24,11 @@ function App() {
   const [openModal, setOpenModal] = useState(null);
   const [modalCallbacks, setModalCallbacks] = useState({});
   const [squares, setSquares] = useState([]);
+  const [lightBGColor, setLightBGColor] = useState();
+  const [darkBGColor, setDarkBGColor] = useState();
+  const [transparentBackgroundColor, setTransparentBackgroundColor] = useState('LIGHT');
+  const toggleTransparentBackgroundColor = () =>
+    setTransparentBackgroundColor(transparentBackgroundColor === 'LIGHT' ? 'DARK' : 'LIGHT');
 
   useEffect(() => {
     if (del || dup) {
@@ -62,7 +67,9 @@ function App() {
         magnification,
         setMagnification,
         squares,
-        setSquares
+        setSquares,
+        transparentBackgroundColor,
+        toggleTransparentBackgroundColor
       }}
     >
       <div className="App">
