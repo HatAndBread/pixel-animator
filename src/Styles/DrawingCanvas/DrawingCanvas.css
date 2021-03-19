@@ -27,6 +27,6 @@
 .drawing-canvas-current-frame-number {
   display: flex;
   justify-content: center;
-  color: black;
+  color: snow;
   font-size: 22px;
 }

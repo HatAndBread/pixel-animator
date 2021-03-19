@@ -1,5 +1,4 @@
 import Modal from '../Modal/Modal';
-import '../../Styles/Save/Save.css';
 import { useContext, useRef, useState, useEffect, createRef } from 'react';
 import { GlobalContext } from './../../App';
 import * as gifshot from 'gifshot';

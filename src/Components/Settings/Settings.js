@@ -13,6 +13,7 @@ export default function Settings() {
       <form>
         <div className="settings-form-label">CANVAS DIMENSIONS</div>
         <label htmlFor="canvas-width">
+          WIDTH:
           <input
             type="number"
             name="canvas-width"
@@ -25,6 +26,7 @@ export default function Settings() {
           />
         </label>
         <label htmlFor="canvas-height">
+          HEIGHT:
           <input
             type="number"
             name="canvas-height"

@@ -4,6 +4,7 @@ import fileIconPath from '../../Assets/file.png';
 import settingsIconPath from '../../Assets/setting.png';
 import undoIconPath from '../../Assets/undo.png';
 import redoIconPath from '../../Assets/redo.png';
+import questionIconPath from '../../Assets/question.png';
 import { GlobalContext } from '../../App';
 import { useContext } from 'react';
 
@@ -35,6 +36,9 @@ export default function MenuBar() {
       </div>
       <div className="menu-bar-item">
         <MenuBarIcon filePath={redoIconPath} alt={'redo'} />
+      </div>
+      <div className="menu-bar-item">
+        <MenuBarIcon filePath={questionIconPath} alt={'About'} onClick={() => context.setOpenModal('ABOUT')} />
       </div>
     </nav>
   );

@@ -46,3 +46,7 @@
   background-color: red;
   color: snow;
 }
+
+.modal-ok-button {
+  width: 100px;
+}

@@ -24,6 +24,7 @@ function App() {
   const [openModal, setOpenModal] = useState(null);
   const [modalCallbacks, setModalCallbacks] = useState({});
   const [squares, setSquares] = useState([]);
+  const [pastStates, setPastStates] = useState([]);
   const [transparentBackgroundColor, setTransparentBackgroundColor] = useState('LIGHT');
   const getLightBGColor = () => (transparentBackgroundColor === 'LIGHT' ? 'lightgray' : '#3d3d3c');
   const getDarkBGColor = () => (transparentBackgroundColor === 'LIGHT' ? 'darkgray' : '#2a2a2a');
@@ -40,6 +41,12 @@ function App() {
     }
     set = 0;
   }, [squares, frames, currentFrameNumber]);
+
+  useEffect(() => {
+    window.addEventListener('beforeunload', (event) => {
+      event.returnValue = `Changes that you made may not be saved.`;
+    });
+  }, []);
 
   return (
     <GlobalContext.Provider
@@ -79,16 +86,6 @@ function App() {
           <Toolbox />
           <DrawingCanvas magnification={magnification} />
           <FrameTools />
-        </div>
-        <div>
-          Icons made by{' '}
-          <a href="https://www.freepik.com" title="Freepik">
-            Freepik
-          </a>{' '}
-          from{' '}
-          <a href="https://www.flaticon.com/" title="Flaticon">
-            www.flaticon.com
-          </a>
         </div>
       </div>
     </GlobalContext.Provider>

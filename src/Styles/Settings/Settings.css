@@ -1,13 +1,10 @@
 .settings-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 .settings-container form {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: left;
 }
 
 .settings-container button {
@@ -17,8 +14,9 @@
 .settings-radios {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: left;
 }
 .settings-form-label {
+  margin-top: 16px;
   text-decoration: underline;
 }

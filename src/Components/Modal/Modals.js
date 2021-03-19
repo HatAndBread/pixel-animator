@@ -1,6 +1,8 @@
 import Settings from '../../Components/Settings/Settings';
 import DeleteModal from '../FrameTools/DeleteModal';
 import Save from '../Save/Save';
+import About from '../About/About';
+
 import { GlobalContext } from '../../App';
 import { useContext } from 'react';
 
@@ -14,6 +16,8 @@ export default function Modals() {
         return <DeleteModal />;
       case 'SAVE':
         return <Save />;
+      case 'ABOUT':
+        return <About />;
       default:
         return '';
     }
