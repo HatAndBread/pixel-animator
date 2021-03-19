@@ -24,11 +24,9 @@ function App() {
   const [openModal, setOpenModal] = useState(null);
   const [modalCallbacks, setModalCallbacks] = useState({});
   const [squares, setSquares] = useState([]);
-  const [lightBGColor, setLightBGColor] = useState();
-  const [darkBGColor, setDarkBGColor] = useState();
   const [transparentBackgroundColor, setTransparentBackgroundColor] = useState('LIGHT');
-  const toggleTransparentBackgroundColor = () =>
-    setTransparentBackgroundColor(transparentBackgroundColor === 'LIGHT' ? 'DARK' : 'LIGHT');
+  const getLightBGColor = () => (transparentBackgroundColor === 'LIGHT' ? 'lightgray' : '#3d3d3c');
+  const getDarkBGColor = () => (transparentBackgroundColor === 'LIGHT' ? 'darkgray' : '#2a2a2a');
 
   useEffect(() => {
     if (del || dup) {
@@ -69,7 +67,9 @@ function App() {
         squares,
         setSquares,
         transparentBackgroundColor,
-        toggleTransparentBackgroundColor
+        setTransparentBackgroundColor,
+        getLightBGColor,
+        getDarkBGColor
       }}
     >
       <div className="App">

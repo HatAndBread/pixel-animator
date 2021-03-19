@@ -18,34 +18,9 @@ export default function Save() {
   useEffect(() => {
     setCTX(canvasRef.current.getContext('2d'));
   }, []);
-  //   useEffect(() => {
-  //     const newGifBlobs = [];
-  //     gifRefs.current.forEach((ref, index) => {
-  //       const myCtx = ref.current.getContext('2d');
-  //       context.frames[index].forEach((square) => {
-  //         myCtx.fillStyle = square.color;
-  //         myCtx.fillRect(
-  //           (square.coords.x / magnification) * outputMagnification,
-  //           (square.coords.y / magnification) * outputMagnification,
-  //           outputMagnification,
-  //           outputMagnification
-  //         );
-  //       });
-  //       newGifBlobs.push(ref.current.toDataURL('image/png'));
-  //     });
-  //     setGifBlobs(newGifBlobs);
-  //   }, [gifRefs, context.frames, magnification, outputMagnification, context.height, context.width]);
-  //   useEffect(() => {
-  //     if (gifBlobs.length) {
-  //       console.log(gifBlobs);
-  //       gifshot.createGIF({ images: gifBlobs }, function (obj) {
-  //         console.log(obj.image);
-  //       });
-  //     }
-  //   }, [gifBlobs]);
   const getSpriteSheet = () => {
     console.log(ctx);
-    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    ctx.clearRect(0, 0, ctx.canvas.width * outputMagnification, ctx.canvas.height * outputMagnification);
     context.frames.forEach((frame, index) => {
       frame.forEach((square) => {
         ctx.fillStyle = square.color;
@@ -68,6 +43,8 @@ export default function Save() {
     const newGifBlobs = [];
     gifRefs.current.forEach((ref, index) => {
       const myCtx = ref.current.getContext('2d');
+      myCtx.fillStyle = 'white';
+      myCtx.fillRect(0, 0, myCtx.canvas.width * outputMagnification, myCtx.canvas.height * outputMagnification);
       context.frames[index].forEach((square) => {
         myCtx.fillStyle = square.color;
         myCtx.fillRect(
@@ -79,6 +56,7 @@ export default function Save() {
       });
       newGifBlobs.push(ref.current.toDataURL('image/png'));
     });
+
     gifshot.createGIF(
       {
         images: newGifBlobs,

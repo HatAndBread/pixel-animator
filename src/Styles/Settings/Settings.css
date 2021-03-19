@@ -1,0 +1,24 @@
+.settings-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.settings-container form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.settings-container button {
+  min-width: 100px;
+}
+
+.settings-radios {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.settings-form-label {
+  text-decoration: underline;
+}
