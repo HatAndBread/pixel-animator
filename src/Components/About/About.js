@@ -8,14 +8,14 @@ export default function About() {
     <div className="about-container">
       <div className="about-txt-content">
         <p>
-          ❓Pixel Art Animator is a free and <a href="https://github.com/HatAndBread/pixel-animator">open-source</a>{' '}
+          👾Pixel Art Animator is a free and <a href="https://github.com/HatAndBread/pixel-animator">open-source</a>{' '}
           tool for making pixel art sprite sheets and animated gifs.
         </p>
         <p>
           <span style={{ color: 'red' }}>♥️ </span>Made with love by Joshua Hume.
         </p>
         <p>
-          🍺If you enjoy Pixel Art Animator please consider
+          🍺If you enjoy Pixel Art Animator please consider{' '}
           <a href="https://www.paypal.com/paypalme/hatandbread">buying me a beer</a> or{' '}
           <a href="https://www.linkedin.com/in/joshua-hume-0259691ab/">giving me a job</a>. 👨‍💻
         </p>

@@ -8,10 +8,6 @@ import { createContext, useState, useEffect } from 'react';
 
 export const GlobalContext = createContext();
 
-let set = 0;
-let del = 0;
-let dup = 0;
-
 function App() {
   const [color, setColor] = useState('#000000');
   const [frames, setFrames] = useState([[]]);
@@ -30,23 +26,14 @@ function App() {
   const getDarkBGColor = () => (transparentBackgroundColor === 'LIGHT' ? 'darkgray' : '#2a2a2a');
 
   useEffect(() => {
-    if (del || dup) {
-      del = 0;
-      dup = 0;
-      setSquares(frames[currentFrameNumber]);
-    } else if (!set) {
-      frames[currentFrameNumber] = squares;
-      setFrames(frames);
-      set = 1;
-    }
-    set = 0;
-  }, [squares, frames, currentFrameNumber]);
-
-  useEffect(() => {
     window.addEventListener('beforeunload', (event) => {
       event.returnValue = `Changes that you made may not be saved.`;
     });
   }, []);
+  useEffect(() => {
+    // console.log('PAST STATES', frames);
+  }, [frames]);
+  useEffect(() => {});
 
   return (
     <GlobalContext.Provider
@@ -76,7 +63,9 @@ function App() {
         transparentBackgroundColor,
         setTransparentBackgroundColor,
         getLightBGColor,
-        getDarkBGColor
+        getDarkBGColor,
+        pastStates,
+        setPastStates
       }}
     >
       <div className="App">
@@ -91,13 +80,5 @@ function App() {
     </GlobalContext.Provider>
   );
 }
-
-export const setDeleted = () => {
-  del = 1;
-};
-
-export const setDuplicated = () => {
-  dup = 1;
-};
 
 export default App;

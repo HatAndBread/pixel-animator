@@ -9,7 +9,6 @@ import zoomOutIconPath from '../../Assets/zoom-out.png';
 import SizeChooser from './SizeChooser';
 import { GlobalContext } from '../../App';
 import { useContext } from 'react';
-import { setDeleted } from '../../App';
 
 export default function Toolbox() {
   const context = useContext(GlobalContext);
@@ -35,7 +34,6 @@ export default function Toolbox() {
       //console.log(arr, context.frames);
       context.setFrames(arr);
       context.setMagnification(context.magnification + num);
-      setDeleted();
     }
   };
 

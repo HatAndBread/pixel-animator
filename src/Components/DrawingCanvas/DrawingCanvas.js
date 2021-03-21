@@ -13,6 +13,20 @@ function DrawingCanvas({ magnification }) {
   const squares = context.squares;
   const setSquares = context.setSquares;
 
+  const update = (copy) => {
+    setSquares(copy);
+    const framesCopy = JSON.parse(JSON.stringify(context.frames));
+    framesCopy[context.currentFrameNumber] = copy;
+    const pastStatesCopy = JSON.parse(JSON.stringify(context.pastStates));
+    if (pastStatesCopy.length > 20) {
+      pastStatesCopy.shift();
+    }
+    pastStatesCopy.push(framesCopy);
+    context.setFrames(framesCopy);
+    context.setPastStates(pastStatesCopy);
+    console.log(pastStatesCopy);
+  };
+
   const getTrueCoords = (coords) => {
     return {
       x: Math.floor(coords.x / magnification) * magnification,
@@ -83,7 +97,7 @@ function DrawingCanvas({ magnification }) {
           arr.forEach((item) => {
             copy.push(item);
           });
-          setSquares(copy);
+          update(copy);
         }
         break;
       }
@@ -103,7 +117,7 @@ function DrawingCanvas({ magnification }) {
             }
           }
         }
-        setSquares(copy);
+        update(copy);
         break;
       }
       case 'dropper': {
@@ -119,11 +133,7 @@ function DrawingCanvas({ magnification }) {
       }
       case 'bucket': {
         const newSquares = floodFill(getTrueCoords, coords, magnification, context, squares, color);
-        setSquares(newSquares);
-        const copy = JSON.parse(JSON.stringify(context.frames));
-        copy[context.currentFrameNumber] = newSquares;
-        console.log(copy);
-        context.setFrames(copy);
+        update(newSquares);
         return;
       }
       case 'scissors': {

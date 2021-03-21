@@ -7,6 +7,12 @@
   background-color: rgb(81, 81, 81);
 }
 
+.App a {
+  color: snow;
+  color: yellow;
+  text-decoration: underline;
+}
+
 .main-horizontal-container {
   display: flex;
   height: calc(100% - 55px);
