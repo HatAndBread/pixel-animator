@@ -39,6 +39,18 @@ export default function Save() {
     context.setOpenModal(null);
   };
 
+  const getOptions = () => {
+    const optionsArr = [];
+    for (let i = 1; i <= 60; i++) {
+      optionsArr.push(
+        <option key={i} value={i}>
+          {i}
+        </option>
+      );
+    }
+    return optionsArr;
+  };
+
   const getGif = () => {
     const newGifBlobs = [];
     gifRefs.current.forEach((ref, index) => {
@@ -109,15 +121,16 @@ export default function Save() {
             <div>
               <label>
                 FPS:
-                <input
-                  type="number"
-                  min="1"
-                  max="60"
-                  defaultValue="20"
+                <select
+                  name="fps-select"
+                  id="fps-select"
                   onChange={(e) => {
                     setFPS(parseInt(e.target.value));
                   }}
-                ></input>
+                  defaultValue="20"
+                >
+                  {getOptions().map((option) => option)}
+                </select>
               </label>
               <div>
                 <div>

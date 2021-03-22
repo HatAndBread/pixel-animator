@@ -44,11 +44,9 @@
 
 #add-new-frame:hover {
   background-color: #8682dd;
-  border-radius: 8px;
 }
 
 .canvas-view-container {
-  border-radius: 8px;
   transition: 0.3s;
   padding: 8px;
 }

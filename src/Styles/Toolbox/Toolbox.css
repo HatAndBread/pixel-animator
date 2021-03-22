@@ -71,7 +71,6 @@ input[type='color'] {
     z-index: 3;
     position: fixed;
     top: 50px;
-    width: 100px;
     left: -166px;
     padding-top: 24px;
     height: calc(100% - 80px);

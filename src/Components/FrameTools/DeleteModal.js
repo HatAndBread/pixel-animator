@@ -7,7 +7,9 @@ export default function DeleteModal() {
 
   const modalContent = (
     <div>
-      <div className="text-content">Do you really want to delete this frame?</div>
+      <div className="text-content" style={{ textAlign: 'center' }}>
+        Do you really want to delete this frame?
+      </div>
       <div className="delete-modal-buttons" style={{ display: 'flex', justifyContent: 'center' }}>
         <button
           onClick={() => {

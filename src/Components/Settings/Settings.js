@@ -8,32 +8,39 @@ export default function Settings() {
   const setTransparentBackgroundColor = context.setTransparentBackgroundColor;
   const handleWidthChange = (e) => context.setWidth(parseInt(e.target.value));
   const handleHeightChange = (e) => context.setHeight(parseInt(e.target.value));
+  const getOptions = () => {
+    const options = [];
+    for (let i = 2; i <= 64; i++) {
+      if (i % 2 === 0) {
+        options.push(i);
+      }
+    }
+    return options;
+  };
   const modalContent = (
     <div className="settings-container">
       <form>
         <div className="settings-form-label">CANVAS DIMENSIONS</div>
         <label htmlFor="canvas-width">WIDTH:</label>
-        <input
-          type="number"
-          name="canvas-width"
-          id="canvas-width"
-          min="2"
-          max="64"
-          step="2"
-          value={context.width}
-          onChange={handleWidthChange}
-        />
+        <select name="canvas-width" id="canvas-width" onChange={handleWidthChange} defaultValue={context.width}>
+          {getOptions().map((num) => {
+            return (
+              <option key={num} value={num}>
+                {num}
+              </option>
+            );
+          })}
+        </select>
         <label htmlFor="canvas-height">HEIGHT:</label>
-        <input
-          type="number"
-          name="canvas-height"
-          id="canvas-height"
-          min="2"
-          max="64"
-          step="2"
-          value={context.height}
-          onChange={handleHeightChange}
-        />
+        <select name="canvas-height" id="canvas-height" onChange={handleHeightChange} defaultValue={context.height}>
+          {getOptions().map((num) => {
+            return (
+              <option key={num} value={num}>
+                {num}
+              </option>
+            );
+          })}
+        </select>
         <div className="settings-form-label">BACKGROUND TRANSPARENCY</div>
         {context.transparentBackgroundColor === 'LIGHT' ? (
           <div

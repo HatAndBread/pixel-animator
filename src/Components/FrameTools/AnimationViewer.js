@@ -19,6 +19,17 @@ export default function AnimationViewer() {
   const frames = context.frames;
   const magnification = context.magnification;
   const firstImage = frames[0];
+  const getOptions = () => {
+    const optionsArr = [];
+    for (let i = 1; i <= 60; i++) {
+      optionsArr.push(
+        <option key={i} value={i}>
+          {i}
+        </option>
+      );
+    }
+    return optionsArr;
+  };
   useEffect(() => {
     setCtx(canvasRef.current.getContext('2d'));
   }, []);
@@ -75,17 +86,16 @@ export default function AnimationViewer() {
       </div>
       <label htmlFor="fps">
         FPS:
-        <input
-          type="number"
+        <select
           name="fps"
           id="fps"
-          min="1"
-          max="60"
-          defaultValue="20"
+          defaultValue={20}
           onChange={(e) => {
             setFPS(parseInt(e.target.value));
           }}
-        />
+        >
+          {getOptions().map((option) => option)}
+        </select>
       </label>
     </div>
   );
