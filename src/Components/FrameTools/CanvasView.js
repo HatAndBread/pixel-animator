@@ -44,11 +44,18 @@ export default function CanvasView({ width, height, frameData, frameNum }) {
   };
 
   const destroy = () => {
-    if (context.currentFrameNumber) {
-      context.setCurrentFrameNumber(context.currentFrameNumber - 1 ? context.currentFrameNumber - 1 : 0);
+    if (context.frames.length) {
       const copy = [...context.frames];
       copy.splice(frameNum, 1);
       update(copy);
+      if (context.currentFrameNumber === frameNum) {
+        const newFrameNum = context.currentFrameNumber - 1 ? context.currentFrameNumber - 1 : 0;
+        context.setCurrentFrameNumber(newFrameNum);
+        context.setSquares(context.frames[newFrameNum]);
+      } else if (context.currentFrameNumber > frameNum) {
+        const newFrameNum = context.currentFrameNumber - 1 ? context.currentFrameNumber - 1 : 0;
+        context.setCurrentFrameNumber(newFrameNum);
+      }
     } else {
       context.setFrames([[]]);
       context.setSquares([]);

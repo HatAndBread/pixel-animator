@@ -30,9 +30,9 @@ export default function Toolbox() {
         }
         arr.push(copy);
       }
+      context.setSquares(arr[[context.currentFrameNumber]]);
       context.setFrames(arr);
       context.setMagnification(context.magnification + num);
-      context.setSquares(arr[[context.currentFrameNumber]]);
     }
   };
 

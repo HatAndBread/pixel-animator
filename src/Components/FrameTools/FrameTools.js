@@ -10,7 +10,7 @@ export default function FrameTools() {
   const context = useContext(GlobalContext);
 
   const addNewFrame = () => {
-    const frames = JSON.parse(JSON.stringify(context.frames));
+    const frames = [...context.frames];
     frames.push([]);
     context.setFrames(frames);
     context.setCurrentFrameNumber(context.frames.length);
