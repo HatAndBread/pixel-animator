@@ -18,7 +18,7 @@
 
 .frame-tools-container img {
   cursor: pointer;
-  width: 32px;
+  height: 32px;
 }
 
 .frame-closer-container {
@@ -80,7 +80,7 @@
     position: fixed;
     top: 50px;
     right: -166px;
-    height: calc(100vh - 55px);
+    height: calc(100% - 55px);
   }
 }
 
