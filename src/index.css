@@ -107,3 +107,7 @@ how to remove the virtical space around the range input in IE*/
     /*Edge starts the margin from the thumb, not the track as other browsers do*/
   }
 }
+
+input[type='color'] {
+  font-size: 16px;
+}
