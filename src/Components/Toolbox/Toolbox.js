@@ -51,7 +51,7 @@ export default function Toolbox({ toolboxStyle, setToolboxStyle }) {
       <div className="color-picker-container">
         <label htmlFor="color-picker">CURRENT COLOR</label>
         <input type="color" id="color-picker" onInput={handleChange} value={context.color} />
-        <SizeChooser />
+        {context.tool === 'pencil' || context.tool === 'eraser' ? <SizeChooser /> : ''}
       </div>
       <ToolboxIcon src={pencilIconPath} alt={'pencil'} onClick={() => setTool('pencil')} />
       <ToolboxIcon src={eraserIconPath} alt={'eraser'} onClick={() => setTool('eraser')} />

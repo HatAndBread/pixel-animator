@@ -17,7 +17,7 @@ export default function SizeChooser() {
         type="range"
         name="size-chooser"
         id="size-chooser"
-        defaultValue={1}
+        value={context.pencilSize}
         max={10}
         min={1}
         onChange={handleInput}

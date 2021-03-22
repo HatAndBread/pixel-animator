@@ -30,6 +30,7 @@
   animation-iteration-count: infinite;
   animation-timing-function: linear;
 }
+
 .size-chooser-container {
   display: flex;
   flex-direction: column;
