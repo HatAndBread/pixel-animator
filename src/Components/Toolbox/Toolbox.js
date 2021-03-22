@@ -23,17 +23,16 @@ export default function Toolbox() {
     if (out && context.magnification <= 1) {
     } else {
       for (let i = 0; i < context.frames.length; i++) {
-        const copy = JSON.parse(JSON.stringify(context.frames[i]));
+        const copy = [...context.frames[i]];
         for (let j = 0; j < copy.length; j++) {
           copy[j].coords.x = (copy[j].coords.x * (context.magnification + num)) / context.magnification;
           copy[j].coords.y = (copy[j].coords.y * (context.magnification + num)) / context.magnification;
         }
         arr.push(copy);
       }
-
-      //console.log(arr, context.frames);
       context.setFrames(arr);
       context.setMagnification(context.magnification + num);
+      context.setSquares(arr[[context.currentFrameNumber]]);
     }
   };
 

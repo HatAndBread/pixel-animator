@@ -10,7 +10,9 @@ export default function floodFill(getTrueCoords, coords, magnification, context,
     }
   }
   squares.forEach((square) => {
-    grid[square.coords.y / magnification][square.coords.x / magnification] = square;
+    if (square) {
+      grid[square.coords.y / magnification][square.coords.x / magnification] = square;
+    }
   });
   grid[seedY][seedX].checked = true;
   const seedColor = grid[seedY][seedX].color;

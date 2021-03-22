@@ -15,16 +15,15 @@ function DrawingCanvas({ magnification }) {
 
   const update = (copy) => {
     setSquares(copy);
-    const framesCopy = JSON.parse(JSON.stringify(context.frames));
+    const framesCopy = [...context.frames];
     framesCopy[context.currentFrameNumber] = copy;
-    const pastStatesCopy = JSON.parse(JSON.stringify(context.pastStates));
+    const pastStatesCopy = [...context.pastStates];
     if (pastStatesCopy.length > 20) {
       pastStatesCopy.shift();
     }
     pastStatesCopy.push(framesCopy);
     context.setFrames(framesCopy);
     context.setPastStates(pastStatesCopy);
-    console.log(pastStatesCopy);
   };
 
   const getTrueCoords = (coords) => {
@@ -55,8 +54,10 @@ function DrawingCanvas({ magnification }) {
     if (ctx) {
       ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
       squares.forEach((square) => {
-        ctx.fillStyle = square.color;
-        ctx.fillRect(square.coords.x, square.coords.y, magnification, magnification);
+        if (squares) {
+          ctx.fillStyle = square.color;
+          ctx.fillRect(square.coords.x, square.coords.y, magnification, magnification);
+        }
       });
     }
   }, [ctx, squares, setSquares, magnification, context.height, context.width]);
@@ -85,7 +86,7 @@ function DrawingCanvas({ magnification }) {
             }
           }
         }
-        const copy = JSON.parse(JSON.stringify(squares));
+        const copy = [...squares];
         if (arr.length) {
           arr.forEach((item) => {
             for (let i = copy.length; i >= 0; i--) {
@@ -103,7 +104,7 @@ function DrawingCanvas({ magnification }) {
       }
       case 'eraser': {
         const eraserCoords = getTrueCoords(coords);
-        const copy = JSON.parse(JSON.stringify(squares));
+        const copy = [...squares];
         for (let x = 0; x < context.pencilSize; x++) {
           for (let y = 0; y < context.pencilSize; y++) {
             for (let i = 0; i < copy.length; i++) {

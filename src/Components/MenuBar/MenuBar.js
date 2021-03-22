@@ -3,13 +3,21 @@ import MenuBarIcon from './MenuBarIcon';
 import fileIconPath from '../../Assets/file.png';
 import settingsIconPath from '../../Assets/setting.png';
 import undoIconPath from '../../Assets/undo.png';
-import redoIconPath from '../../Assets/redo.png';
 import questionIconPath from '../../Assets/question.png';
 import { GlobalContext } from '../../App';
 import { useContext } from 'react';
 
 export default function MenuBar() {
   const context = useContext(GlobalContext);
+  const undo = () => {
+    if (context.pastStates.length > 1) {
+      const pastStatesCopy = [...context.pastStates];
+      pastStatesCopy.pop();
+      context.setFrames(pastStatesCopy[pastStatesCopy.length - 1]);
+      context.setPastStates(pastStatesCopy);
+      context.setSquares(pastStatesCopy[pastStatesCopy.length - 1][context.currentFrameNumber]);
+    }
+  };
 
   return (
     <nav className="menu-bar">
@@ -32,10 +40,7 @@ export default function MenuBar() {
         />
       </div>
       <div className="menu-bar-item">
-        <MenuBarIcon filePath={undoIconPath} alt={'undo'} />
-      </div>
-      <div className="menu-bar-item">
-        <MenuBarIcon filePath={redoIconPath} alt={'redo'} />
+        <MenuBarIcon filePath={undoIconPath} alt={'undo'} onClick={undo} />
       </div>
       <div className="menu-bar-item">
         <MenuBarIcon filePath={questionIconPath} alt={'About'} onClick={() => context.setOpenModal('ABOUT')} />

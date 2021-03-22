@@ -32,7 +32,7 @@ export default function CanvasView({ width, height, frameData, frameNum }) {
     context.setSquares(context.frames[frameNum]);
   };
   const update = (copy) => {
-    const pastStatesCopy = JSON.parse(JSON.stringify(context.pastStates));
+    const pastStatesCopy = [...context.pastStates];
     pastStatesCopy.push(copy);
     context.setFrames(copy);
     context.setPastStates(pastStatesCopy);
@@ -46,7 +46,7 @@ export default function CanvasView({ width, height, frameData, frameNum }) {
   const destroy = () => {
     if (context.currentFrameNumber) {
       context.setCurrentFrameNumber(context.currentFrameNumber - 1 ? context.currentFrameNumber - 1 : 0);
-      const copy = JSON.parse(JSON.stringify(context.frames));
+      const copy = [...context.frames];
       copy.splice(frameNum, 1);
       update(copy);
     } else {
@@ -56,7 +56,7 @@ export default function CanvasView({ width, height, frameData, frameNum }) {
   };
 
   const duplicate = () => {
-    const copy = JSON.parse(JSON.stringify(context.frames));
+    const copy = [...context.frames];
     copy.splice(frameNum, 0, context.frames[frameNum]);
     context.setFrames(copy);
   };

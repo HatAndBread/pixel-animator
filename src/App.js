@@ -30,10 +30,6 @@ function App() {
       event.returnValue = `Changes that you made may not be saved.`;
     });
   }, []);
-  useEffect(() => {
-    // console.log('PAST STATES', frames);
-  }, [frames]);
-  useEffect(() => {});
 
   return (
     <GlobalContext.Provider
