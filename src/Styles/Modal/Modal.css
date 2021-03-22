@@ -26,10 +26,10 @@
 .modal-box {
   position: fixed;
   background-color: slateblue;
-  padding: 56px 32px 32px 32px;
+  padding: 48px 24px 24px 24px;
   border-radius: 16px;
   box-shadow: rgba(30, 30, 30, 0.7) 0px 0px 8px 8px;
-  margin: 32px;
+  margin: 8px;
 }
 
 .modal-container button {
