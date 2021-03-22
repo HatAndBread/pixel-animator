@@ -1,4 +1,11 @@
 .form-content {
   display: flex;
   flex-direction: column;
+  align-items: left;
+  width: 100%;
+}
+
+.save-container {
+  width: 100%;
+  display: flex;
 }

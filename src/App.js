@@ -21,6 +21,8 @@ function App() {
   const [modalCallbacks, setModalCallbacks] = useState({});
   const [squares, setSquares] = useState([]);
   const [pastStates, setPastStates] = useState([]);
+  const [toolboxStyle, setToolboxStyle] = useState({});
+  const [frameToolStyle, setFrameToolStyle] = useState({});
   const [transparentBackgroundColor, setTransparentBackgroundColor] = useState('LIGHT');
   const getLightBGColor = () => (transparentBackgroundColor === 'LIGHT' ? 'lightgray' : '#3d3d3c');
   const getDarkBGColor = () => (transparentBackgroundColor === 'LIGHT' ? 'darkgray' : '#2a2a2a');
@@ -66,11 +68,16 @@ function App() {
     >
       <div className="App">
         <Modals />
-        <MenuBar />
+        <MenuBar
+          toolboxStyle={toolboxStyle}
+          setToolboxStyle={setToolboxStyle}
+          frameToolStyle={frameToolStyle}
+          setFrameToolStyle={setFrameToolStyle}
+        />
         <div className="main-horizontal-container">
-          <Toolbox />
+          <Toolbox toolboxStyle={toolboxStyle} setToolboxStyle={setToolboxStyle} />
           <DrawingCanvas magnification={magnification} />
-          <FrameTools />
+          <FrameTools frameToolStyle={frameToolStyle} setFrameToolStyle={setFrameToolStyle} />
         </div>
       </div>
     </GlobalContext.Provider>

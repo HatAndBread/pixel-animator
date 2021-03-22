@@ -1,12 +1,13 @@
 import '../../Styles/FrameTools/FrameTools.css';
 import addFrameIcon from '../../Assets/add.png';
 import AnimationViewer from './AnimationViewer';
+import closeIcon from '../../Assets/cancel.png';
 
 import CanvasView from './CanvasView';
 import { GlobalContext } from '../../App';
 import { useContext } from 'react';
 
-export default function FrameTools() {
+export default function FrameTools({ frameToolStyle, setFrameToolStyle }) {
   const context = useContext(GlobalContext);
 
   const addNewFrame = () => {
@@ -16,8 +17,12 @@ export default function FrameTools() {
     context.setCurrentFrameNumber(context.frames.length);
     context.setSquares(frames[context.frames.length]);
   };
+
   return (
-    <div className="frame-tools-container">
+    <div className="frame-tools-container" style={frameToolStyle}>
+      <div className="frame-closer-container">
+        <img src={closeIcon} alt="X" onClick={() => setFrameToolStyle({})} />
+      </div>
       <AnimationViewer />
       <div>
         <img src={addFrameIcon} alt="ADD NEW FRAME" id="add-new-frame" onClick={addNewFrame} />

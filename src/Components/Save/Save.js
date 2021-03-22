@@ -2,6 +2,7 @@ import Modal from '../Modal/Modal';
 import { useContext, useRef, useState, useEffect, createRef } from 'react';
 import { GlobalContext } from './../../App';
 import * as gifshot from 'gifshot';
+import '../../Styles/Save/Save.css';
 import saveAs from 'save-as';
 
 export default function Save() {
@@ -73,7 +74,7 @@ export default function Save() {
   const handleFileTypeChange = (e) => setOutputFileType(e.target.value);
   const handleSpriteSizeInput = (e) => setOutputMagnification(parseInt(e.target.value));
   const modalContent = (
-    <div className="">
+    <div className="save-container">
       <form
         action=""
         onSubmit={(e) => {
@@ -81,22 +82,23 @@ export default function Save() {
         }}
       >
         <div className="form-content">
-          OUTPUT TYPE:
           <div>
             <div className="input-radio" onChange={handleFileTypeChange}>
-              <input
-                type="radio"
-                name="output"
-                id="gif"
-                value="gif"
-                defaultChecked
-                onSubmit={(e) => {
-                  e.preventDefault();
-                }}
-              />
-              <label htmlFor="gif" className="gif">
-                GIF
-              </label>
+              <div>
+                <input
+                  type="radio"
+                  name="output"
+                  id="gif"
+                  value="gif"
+                  defaultChecked
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                  }}
+                />
+                <label htmlFor="gif" className="gif">
+                  GIF
+                </label>
+              </div>
               <div>
                 <input type="radio" name="output" id="sprite-sheet" value="sprite-sheet" />
                 <label htmlFor="sprite-sheet">PNG SPRITE SHEET</label>

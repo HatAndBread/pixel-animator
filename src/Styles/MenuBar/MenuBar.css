@@ -7,6 +7,7 @@
   color: snow;
   border-style: outset;
   margin-bottom: 3px;
+  overflow-x: auto;
 }
 
 .menu-bar img {
@@ -18,4 +19,15 @@
 
 .menu-bar-item:hover {
   background-color: #8682dd;
+}
+
+@media only screen and (max-width: 600px) {
+  .goodbye {
+    display: flex;
+  }
+}
+@media only screen and (min-width: 601px) {
+  .goodbye {
+    display: none;
+  }
 }

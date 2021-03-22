@@ -21,3 +21,9 @@
   width: 100vw;
   padding-right: 100px;
 }
+
+@media only screen and (max-width: 600px) {
+  .main-horizontal-container {
+    justify-content: center;
+  }
+}

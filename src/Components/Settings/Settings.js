@@ -18,7 +18,7 @@ export default function Settings() {
           name="canvas-width"
           id="canvas-width"
           min="2"
-          max="128"
+          max="64"
           step="2"
           value={context.width}
           onChange={handleWidthChange}
@@ -29,7 +29,7 @@ export default function Settings() {
           name="canvas-height"
           id="canvas-height"
           min="2"
-          max="128"
+          max="64"
           step="2"
           value={context.height}
           onChange={handleHeightChange}

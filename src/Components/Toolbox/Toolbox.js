@@ -6,11 +6,12 @@ import dropperIconPath from '../../Assets/dropper.png';
 import bucketIconPath from '../../Assets/paint-bucket.png';
 import zoomInIconPath from '../../Assets/zoom-in.png';
 import zoomOutIconPath from '../../Assets/zoom-out.png';
+import closerPath from '../../Assets/cancel.png';
 import SizeChooser from './SizeChooser';
 import { GlobalContext } from '../../App';
 import { useContext } from 'react';
 
-export default function Toolbox() {
+export default function Toolbox({ toolboxStyle, setToolboxStyle }) {
   const context = useContext(GlobalContext);
   const setTool = (tool) => {
     context.setTool(tool);
@@ -37,7 +38,16 @@ export default function Toolbox() {
   };
 
   return (
-    <div className="toolbox-container">
+    <div className="toolbox-container" style={toolboxStyle}>
+      <div className="toolbox-closer">
+        <img
+          src={closerPath}
+          alt="X"
+          onClick={() => {
+            setToolboxStyle({});
+          }}
+        />
+      </div>
       <div className="color-picker-container">
         <label htmlFor="color-picker">CURRENT COLOR</label>
         <input type="color" id="color-picker" onInput={handleChange} value={context.color} />

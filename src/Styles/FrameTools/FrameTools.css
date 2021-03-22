@@ -7,9 +7,10 @@
   border-style: outset;
   display: flex;
   flex-direction: column;
+  transition: 0.3s;
 }
 .frame-tools-container-frames {
-  overflow-y: scroll;
+  overflow-y: auto;
   border-top-style: groove;
   border-top-width: 6px;
   border-top-color: #8682dd;
@@ -18,6 +19,12 @@
 .frame-tools-container img {
   cursor: pointer;
   width: 32px;
+}
+
+.frame-closer-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .canvas-view {
@@ -66,4 +73,19 @@
 
 .delete-duplicate-container img {
   margin: 8px;
+}
+
+@media only screen and (max-width: 600px) {
+  .frame-tools-container {
+    position: fixed;
+    top: 50px;
+    right: -166px;
+    height: calc(100vh - 55px);
+  }
+}
+
+@media only screen and (min-width: 601px) {
+  .frame-closer-container {
+    display: none;
+  }
 }

@@ -139,7 +139,9 @@ function DrawingCanvas({ magnification }) {
       }
       case 'bucket': {
         const newSquares = floodFill(getTrueCoords, coords, magnification, context, squares, color);
-        update(newSquares);
+        if (newSquares) {
+          update(newSquares);
+        }
         return;
       }
       case 'scissors': {

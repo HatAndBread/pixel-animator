@@ -1,8 +1,17 @@
 export default function floodFill(getTrueCoords, coords, magnification, context, squares, color) {
   const seed = getTrueCoords(coords);
-  const seedX = seed.x / magnification;
-  const seedY = seed.y / magnification;
+  let seedX = seed.x / magnification;
+  let seedY = seed.y / magnification;
   const grid = new Array(context.height);
+  if (seedX < 0) {
+    seedX = 0;
+  }
+  if (seedY < 0) {
+    seedY = 0;
+  }
+  if (seedY > grid.length) {
+    seedY = grid.length;
+  }
   for (let i = 0; i < grid.length; i++) {
     grid[i] = new Array(context.width);
     for (let j = 0; j < grid[i].length; j++) {
@@ -10,11 +19,17 @@ export default function floodFill(getTrueCoords, coords, magnification, context,
     }
   }
   squares.forEach((square) => {
-    if (square) {
+    if (grid[square.coords.y / magnification]) {
       grid[square.coords.y / magnification][square.coords.x / magnification] = square;
+    } else {
+      return;
     }
   });
-  grid[seedY][seedX].checked = true;
+  try {
+    grid[seedY][seedX].checked = true;
+  } catch {
+    return;
+  }
   const seedColor = grid[seedY][seedX].color;
   grid[seedY][seedX].color = color;
   const queue = [grid[seedY][seedX]];

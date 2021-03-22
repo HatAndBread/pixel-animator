@@ -8,6 +8,8 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
+  transition: 0.3s;
+  overflow-y: auto;
 }
 
 .toolbox-container img {
@@ -61,4 +63,39 @@ input[type='color'] {
   flex-direction: column;
   align-items: center;
   border-radius: 16px;
+}
+
+@media only screen and (max-width: 600px) {
+  .toolbox-container {
+    z-index: 3;
+    position: fixed;
+    top: 50px;
+    width: 100px;
+    left: -166px;
+    padding-top: 24px;
+    height: calc(100vh - 80px);
+  }
+  .toolbox-container .toolbox-closer {
+    height: fit-content;
+    position: absolute;
+    top: 0px;
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+  }
+  .toolbox-container .toolbox-closer img {
+    height: 30px;
+    padding: 0px;
+    transition: 0.3s;
+  }
+  .toolbox-container .toolbox-closer img:hover {
+    background-color: initial;
+    height: 40px;
+  }
+}
+
+@media only screen and (min-width: 601px) {
+  .toolbox-closer {
+    display: none;
+  }
 }

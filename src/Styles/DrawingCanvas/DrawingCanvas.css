@@ -32,11 +32,15 @@
 }
 
 .size-indicator {
-  width: 200px;
-  height: 200px;
-  opacity: 0.3;
+  opacity: 0.5;
   background-color: gray;
   pointer-events: none;
   z-index: 1000;
   position: fixed;
+}
+
+@media only screen and (max-width: 600px) {
+  .drawing-canvas-container {
+    max-width: 90vw;
+  }
 }
