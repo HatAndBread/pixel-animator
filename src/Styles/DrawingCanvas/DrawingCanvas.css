@@ -30,3 +30,13 @@
   color: snow;
   font-size: 22px;
 }
+
+.size-indicator {
+  width: 200px;
+  height: 200px;
+  opacity: 0.3;
+  background-color: gray;
+  pointer-events: none;
+  z-index: 1000;
+  position: fixed;
+}

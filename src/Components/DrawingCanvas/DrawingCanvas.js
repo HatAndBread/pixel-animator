@@ -13,6 +13,7 @@ function DrawingCanvas({ magnification }) {
   const color = useContext(GlobalContext).color;
   const [mouseDown, setMouseDown] = useState(false);
   const canvasRef = useRef(null);
+  const sizeIndicator = useRef(null);
   const [ctx, setCtx] = useState(null);
   const squares = context.squares;
   const setSquares = context.setSquares;
@@ -154,11 +155,19 @@ function DrawingCanvas({ magnification }) {
     handleTool(e);
   };
   const handlePointerUp = () => {
+    sizeIndicator.current.hidden = true;
     setMouseDown(false);
   };
   const handlePointerMove = (e) => {
     if (mouseDown) {
       handleTool(e);
+    }
+    if (context.tool === 'pencil' || context.tool === 'eraser') {
+      sizeIndicator.current.hidden = false;
+      sizeIndicator.current.style.top = `${e.clientY}px`;
+      sizeIndicator.current.style.left = `${e.clientX}px`;
+      sizeIndicator.current.style.width = `${context.pencilSize * magnification}px`;
+      sizeIndicator.current.style.height = `${context.pencilSize * magnification}px`;
     }
   };
   const handleTouchMove = (e) => {
@@ -184,6 +193,7 @@ function DrawingCanvas({ magnification }) {
   };
   return (
     <div>
+      <div className="size-indicator" ref={sizeIndicator} hidden></div>
       <div className="drawing-canvas-current-frame-number">Frame: {context.currentFrameNumber}</div>
       <div className="drawing-canvas-container">
         <BGCanvas width={context.width} height={context.height} magnification={magnification} />
