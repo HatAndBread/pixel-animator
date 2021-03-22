@@ -12,32 +12,28 @@ export default function Settings() {
     <div className="settings-container">
       <form>
         <div className="settings-form-label">CANVAS DIMENSIONS</div>
-        <label htmlFor="canvas-width">
-          WIDTH:
-          <input
-            type="number"
-            name="canvas-width"
-            id="canvas-width"
-            min="2"
-            max="128"
-            step="2"
-            value={context.width}
-            onChange={handleWidthChange}
-          />
-        </label>
-        <label htmlFor="canvas-height">
-          HEIGHT:
-          <input
-            type="number"
-            name="canvas-height"
-            id="canvas-height"
-            min="2"
-            max="128"
-            step="2"
-            value={context.height}
-            onChange={handleHeightChange}
-          />
-        </label>
+        <label htmlFor="canvas-width">WIDTH:</label>
+        <input
+          type="number"
+          name="canvas-width"
+          id="canvas-width"
+          min="2"
+          max="128"
+          step="2"
+          value={context.width}
+          onChange={handleWidthChange}
+        />
+        <label htmlFor="canvas-height">HEIGHT:</label>
+        <input
+          type="number"
+          name="canvas-height"
+          id="canvas-height"
+          min="2"
+          max="128"
+          step="2"
+          value={context.height}
+          onChange={handleHeightChange}
+        />
         <div className="settings-form-label">BACKGROUND TRANSPARENCY</div>
         {context.transparentBackgroundColor === 'LIGHT' ? (
           <div

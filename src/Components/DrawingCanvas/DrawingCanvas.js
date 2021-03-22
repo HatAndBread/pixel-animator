@@ -3,6 +3,10 @@ import { useState, useContext, useRef, useEffect } from 'react';
 import floodFill from './floodFill';
 import BGCanvas from './BGCanvas';
 import '.././../Styles/DrawingCanvas/DrawingCanvas.css';
+import pencilCursor from '../../Assets/cursor-pencil.png';
+import eraserCursor from '../../Assets/cursor-eraser.png';
+import bucketCursor from '../../Assets/cursor-paint-bucket.png';
+import dropperCursor from '../../Assets/dropper-cursor.png';
 
 function DrawingCanvas({ magnification }) {
   const context = useContext(GlobalContext);
@@ -54,7 +58,7 @@ function DrawingCanvas({ magnification }) {
     if (ctx) {
       ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
       squares.forEach((square) => {
-        if (squares) {
+        if (square) {
           ctx.fillStyle = square.color;
           ctx.fillRect(square.coords.x, square.coords.y, magnification, magnification);
         }
@@ -160,6 +164,24 @@ function DrawingCanvas({ magnification }) {
   const handleTouchMove = (e) => {
     handlePointerMove({ target: document.elementFromPoint(e.touches[0].clientX, e.touches[0].clientY) });
   };
+  const changeCursor = () => {
+    switch (context.tool) {
+      case 'pencil':
+        canvasRef.current.style.cursor = `url("${pencilCursor}"), default`;
+        break;
+      case 'eraser':
+        canvasRef.current.style.cursor = `url("${eraserCursor}"), default`;
+        break;
+      case 'bucket':
+        canvasRef.current.style.cursor = `url("${bucketCursor}"), default`;
+        break;
+      case 'dropper':
+        canvasRef.current.style.cursor = `url("${dropperCursor}"), default`;
+        break;
+      default:
+        canvasRef.current.style.cursor = 'initial';
+    }
+  };
   return (
     <div>
       <div className="drawing-canvas-current-frame-number">Frame: {context.currentFrameNumber}</div>
@@ -175,6 +197,7 @@ function DrawingCanvas({ magnification }) {
           onPointerLeave={handlePointerUp}
           onPointerMove={handlePointerMove}
           onTouchMove={handleTouchMove}
+          onPointerEnter={changeCursor}
         ></canvas>
       </div>
     </div>

@@ -35,6 +35,7 @@ export default function CanvasView({ width, height, frameData, frameNum }) {
     const pastStatesCopy = [...context.pastStates];
     pastStatesCopy.push(copy);
     context.setFrames(copy);
+    console.log(copy);
     context.setPastStates(pastStatesCopy);
   };
 
@@ -44,16 +45,16 @@ export default function CanvasView({ width, height, frameData, frameNum }) {
   };
 
   const destroy = () => {
-    if (context.frames.length) {
+    if (context.frames.length > 1) {
       const copy = [...context.frames];
       copy.splice(frameNum, 1);
       update(copy);
       if (context.currentFrameNumber === frameNum) {
-        const newFrameNum = context.currentFrameNumber - 1 ? context.currentFrameNumber - 1 : 0;
+        const newFrameNum = context.currentFrameNumber > 1 ? context.currentFrameNumber - 1 : 0;
         context.setCurrentFrameNumber(newFrameNum);
         context.setSquares(context.frames[newFrameNum]);
       } else if (context.currentFrameNumber > frameNum) {
-        const newFrameNum = context.currentFrameNumber - 1 ? context.currentFrameNumber - 1 : 0;
+        const newFrameNum = context.currentFrameNumber > 1 ? context.currentFrameNumber - 1 : 0;
         context.setCurrentFrameNumber(newFrameNum);
       }
     } else {
@@ -63,9 +64,10 @@ export default function CanvasView({ width, height, frameData, frameNum }) {
   };
 
   const duplicate = () => {
-    const copy = [...context.frames];
-    copy.splice(frameNum, 0, context.frames[frameNum]);
-    context.setFrames(copy);
+    const copy = JSON.parse(JSON.stringify(context.frames)); //[...context.frames];
+    copy.push(context.frames[frameNum]);
+    context.setSquares(copy[context.currentFrameNumber]);
+    update(copy);
   };
 
   return (
