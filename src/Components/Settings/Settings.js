@@ -6,7 +6,9 @@ import '../../Styles/Settings/Settings.css';
 export default function Settings() {
   const context = useContext(GlobalContext);
   const setTransparentBackgroundColor = context.setTransparentBackgroundColor;
-  const handleWidthChange = (e) => context.setWidth(parseInt(e.target.value));
+  const handleWidthChange = (e) => {
+    context.setWidth(parseInt(e.target.value));
+  };
   const handleHeightChange = (e) => context.setHeight(parseInt(e.target.value));
   const getOptions = () => {
     const options = [];

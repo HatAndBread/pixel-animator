@@ -57,6 +57,7 @@ function DrawingCanvas({ magnification }) {
 
   useEffect(() => {
     if (ctx) {
+      console.log(squares);
       ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
       squares.forEach((square) => {
         if (square) {
@@ -65,7 +66,7 @@ function DrawingCanvas({ magnification }) {
         }
       });
     }
-  }, [ctx, squares, setSquares, magnification, context.height, context.width]);
+  }, [ctx, squares, setSquares, magnification, context.width, context.height]);
 
   const handleTool = (e) => {
     const coords = {

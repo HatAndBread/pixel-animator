@@ -21,8 +21,6 @@ export default function floodFill(getTrueCoords, coords, magnification, context,
   squares.forEach((square) => {
     if (grid[square.coords.y / magnification]) {
       grid[square.coords.y / magnification][square.coords.x / magnification] = square;
-    } else {
-      return;
     }
   });
   try {
@@ -33,13 +31,14 @@ export default function floodFill(getTrueCoords, coords, magnification, context,
   const seedColor = grid[seedY][seedX].color;
   grid[seedY][seedX].color = color;
   const queue = [grid[seedY][seedX]];
+  console.log(JSON.parse(JSON.stringify(grid)), 'SDFDDSFFDFS');
   while (queue.length) {
     const firstX = queue[0].coords.x / magnification;
     const firstY = queue[0].coords.y / magnification;
     const north = grid[firstY - 1] ? grid[firstY - 1][firstX] : null;
     const south = grid[firstY + 1] ? grid[firstY + 1][firstX] : null;
-    const east = grid[firstX + 1] ? grid[firstY][firstX + 1] : null;
-    const west = grid[firstX - 1] ? grid[firstY][firstX - 1] : null;
+    const east = grid[firstY][firstX + 1] ? grid[firstY][firstX + 1] : null;
+    const west = grid[firstY][firstX - 1] ? grid[firstY][firstX - 1] : null;
     if (north?.color === seedColor && !north.checked) {
       north.color = color;
       north.checked = true;
