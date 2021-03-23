@@ -2,12 +2,13 @@ import '../../Styles/FrameTools/FrameTools.css';
 import addFrameIcon from '../../Assets/add.png';
 import AnimationViewer from './AnimationViewer';
 import closeIcon from '../../Assets/cancel.png';
-
+import { useState } from 'react';
 import CanvasView from './CanvasView';
 import { GlobalContext } from '../../App';
 import { useContext } from 'react';
 
 export default function FrameTools({ frameToolStyle, setFrameToolStyle }) {
+  const [dragElement, setDragElement] = useState(null);
   const context = useContext(GlobalContext);
 
   const addNewFrame = () => {
@@ -30,7 +31,15 @@ export default function FrameTools({ frameToolStyle, setFrameToolStyle }) {
       <div className="frame-tools-container-frames">
         {context.frames.map((frame, index) => {
           return (
-            <CanvasView width={context.width} height={context.height} frameData={frame} key={index} frameNum={index} />
+            <CanvasView
+              width={context.width}
+              height={context.height}
+              frameData={frame}
+              key={index}
+              frameNum={index}
+              dragElement={dragElement}
+              setDragElement={setDragElement}
+            />
           );
         })}
       </div>

@@ -5,7 +5,7 @@ import '../../Styles/FrameTools/FrameTools.css';
 import trashCanIcon from '../../Assets/trash-can.png';
 import cloneIcon from '../../Assets/cloning.png';
 
-export default function CanvasView({ width, height, frameData, frameNum }) {
+export default function CanvasView({ width, height, frameData, frameNum, dragElement, setDragElement }) {
   const canvasRef = useRef();
   const [ctx, setCtx] = useState(null);
   const context = useContext(GlobalContext);
@@ -75,24 +75,50 @@ export default function CanvasView({ width, height, frameData, frameNum }) {
     context.setSquares(copy[context.currentFrameNumber]);
     update(copy);
   };
+  const handleDrop = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const copy = [...context.frames];
+    const dropAreaNum = e.target.dataset.frameNum;
+    const removedElement = copy.splice(dragElement, 1)[0];
+    copy.splice(dropAreaNum, 0, removedElement);
+    context.setFrames(copy);
+    context.setCurrentFrameNumber(dropAreaNum);
+    context.setSquares(copy[dropAreaNum]);
+  };
 
   return (
     <div
       className="canvas-view-container"
+      onDragEnter={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+      }}
+      onDragOver={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+      }}
+      onDragLeave={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+      }}
+      onDrop={handleDrop}
       style={context.currentFrameNumber === frameNum ? { backgroundColor: '#8682dd' } : {}}
-      draggable
-      onDrag={(e) => {
-        console.log(e);
-      }}
-      onDragEnd={(e) => {
-        console.log('DRag ended!', e);
-      }}
     >
       <div style={{ display: 'flex', justifyContent: 'space-around' }}>
         <div onClick={handleClick}>
           <div className="canvas-view-number-label">Frame {frameNum}</div>
           <div>
-            <canvas width={width * 2} height={height * 2} ref={canvasRef} className="canvas-view"></canvas>
+            <canvas
+              width={width * 2}
+              height={height * 2}
+              ref={canvasRef}
+              className="canvas-view"
+              draggable
+              data-frame-num={frameNum}
+              onDragStart={() => setDragElement(frameNum)}
+              onDragEnd={() => setDragElement(null)}
+            ></canvas>
           </div>
         </div>
         <div className="delete-duplicate-container">
