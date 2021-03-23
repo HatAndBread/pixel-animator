@@ -57,7 +57,6 @@ function DrawingCanvas({ magnification }) {
 
   useEffect(() => {
     if (ctx) {
-      console.log(squares);
       ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
       squares.forEach((square) => {
         if (square) {

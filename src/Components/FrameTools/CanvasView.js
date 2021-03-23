@@ -35,7 +35,6 @@ export default function CanvasView({ width, height, frameData, frameNum }) {
     const pastStatesCopy = [...context.pastStates];
     pastStatesCopy.push(copy);
     context.setFrames(copy);
-    console.log(copy);
     context.setPastStates(pastStatesCopy);
   };
 
@@ -50,12 +49,19 @@ export default function CanvasView({ width, height, frameData, frameNum }) {
       copy.splice(frameNum, 1);
       update(copy);
       if (context.currentFrameNumber === frameNum) {
-        const newFrameNum = context.currentFrameNumber > 1 ? context.currentFrameNumber - 1 : 0;
-        context.setCurrentFrameNumber(newFrameNum);
-        context.setSquares(context.frames[newFrameNum]);
+        if (frameNum === 0) {
+          context.setCurrentFrameNumber(0);
+          context.setSquares(context.frames[1]);
+        } else if (frameNum === context.frames.length - 1) {
+          context.setCurrentFrameNumber(frameNum - 1);
+          context.setSquares(context.frames[frameNum - 1]);
+        } else {
+          context.setCurrentFrameNumber(frameNum);
+          context.setSquares(context.frames[frameNum + 1]);
+        }
       } else if (context.currentFrameNumber > frameNum) {
         const newFrameNum = context.currentFrameNumber > 1 ? context.currentFrameNumber - 1 : 0;
-        context.setCurrentFrameNumber(newFrameNum);
+        context.setCurrentFrameNumber(newFrameNum - 1 >= 0 ? newFrameNum : 0);
       }
     } else {
       context.setFrames([[]]);
@@ -74,6 +80,13 @@ export default function CanvasView({ width, height, frameData, frameNum }) {
     <div
       className="canvas-view-container"
       style={context.currentFrameNumber === frameNum ? { backgroundColor: '#8682dd' } : {}}
+      draggable
+      onDrag={(e) => {
+        console.log(e);
+      }}
+      onDragEnd={(e) => {
+        console.log('DRag ended!', e);
+      }}
     >
       <div style={{ display: 'flex', justifyContent: 'space-around' }}>
         <div onClick={handleClick}>

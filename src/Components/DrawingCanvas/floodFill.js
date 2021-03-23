@@ -31,7 +31,6 @@ export default function floodFill(getTrueCoords, coords, magnification, context,
   const seedColor = grid[seedY][seedX].color;
   grid[seedY][seedX].color = color;
   const queue = [grid[seedY][seedX]];
-  console.log(JSON.parse(JSON.stringify(grid)), 'SDFDDSFFDFS');
   while (queue.length) {
     const firstX = queue[0].coords.x / magnification;
     const firstY = queue[0].coords.y / magnification;

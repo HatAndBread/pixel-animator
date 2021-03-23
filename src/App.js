@@ -33,10 +33,6 @@ function App() {
     });
   }, []);
 
-  useEffect(() => {
-    console.log(frames);
-  }, [frames]);
-
   return (
     <GlobalContext.Provider
       value={{
