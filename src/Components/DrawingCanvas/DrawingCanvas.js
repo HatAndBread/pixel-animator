@@ -22,13 +22,15 @@ function DrawingCanvas({ magnification }) {
     setSquares(copy);
     const framesCopy = [...context.frames];
     framesCopy[context.currentFrameNumber] = copy;
-    const pastStatesCopy = [...context.pastStates];
-    if (pastStatesCopy.length > 20) {
-      pastStatesCopy.shift();
+    if (JSON.stringify(context.frames) !== JSON.stringify(framesCopy)) {
+      const pastStatesCopy = [...context.pastStates];
+      if (pastStatesCopy.length > 50) {
+        pastStatesCopy.shift();
+      }
+      pastStatesCopy.push(framesCopy);
+      context.setFrames(framesCopy);
+      context.setPastStates(pastStatesCopy);
     }
-    pastStatesCopy.push(framesCopy);
-    context.setFrames(framesCopy);
-    context.setPastStates(pastStatesCopy);
   };
 
   const getTrueCoords = (coords) => {
