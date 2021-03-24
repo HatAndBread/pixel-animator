@@ -11,15 +11,13 @@ export default function Save() {
   const canvasRef = useRef();
   const [ctx, setCTX] = useState();
   const [outputMagnification, setOutputMagnification] = useState(1);
-  const [outputFileType, setOutputFileType] = useState('gif');
-  const [fps, setFPS] = useState(20);
-  const [gifBlobs, setGifBlobs] = useState([]);
+  const [outputFileType, setOutputFileType] = useState('png');
+  const [fps, setFPS] = useState(10);
   const gifRefs = useRef(context.frames.map(() => createRef()));
   useEffect(() => {
     setCTX(canvasRef.current.getContext('2d'));
   }, []);
   const getSpriteSheet = () => {
-    console.log(ctx);
     ctx.clearRect(0, 0, ctx.canvas.width * outputMagnification, ctx.canvas.height * outputMagnification);
     context.frames.forEach((frame, index) => {
       frame.forEach((square) => {
@@ -41,7 +39,7 @@ export default function Save() {
 
   const getOptions = () => {
     const optionsArr = [];
-    for (let i = 1; i <= 60; i++) {
+    for (let i = 1; i <= 10; i++) {
       !(60 % i) &&
         optionsArr.push(
           <option key={i} value={i}>
@@ -56,7 +54,7 @@ export default function Save() {
     const newGifBlobs = [];
     gifRefs.current.forEach((ref, index) => {
       const myCtx = ref.current.getContext('2d');
-      myCtx.fillStyle = 'white';
+      myCtx.fillStyle = context.gifBackgroundColor;
       myCtx.fillRect(0, 0, myCtx.canvas.width * outputMagnification, myCtx.canvas.height * outputMagnification);
       context.frames[index].forEach((square) => {
         myCtx.fillStyle = square.color;
@@ -75,7 +73,7 @@ export default function Save() {
         images: newGifBlobs,
         gifWidth: context.width * outputMagnification,
         gifHeight: context.height * outputMagnification,
-        frameDuration: 1
+        frameDuration: 60 / fps / 6
       },
       function (obj) {
         fetch(obj.image)
@@ -98,12 +96,15 @@ export default function Save() {
           <div>
             <div className="input-radio" onChange={handleFileTypeChange}>
               <div>
+                <input type="radio" name="output" id="sprite-sheet" value="sprite-sheet" defaultChecked />
+                <label htmlFor="sprite-sheet">PNG SPRITE SHEET</label>
+              </div>
+              <div>
                 <input
                   type="radio"
                   name="output"
                   id="gif"
                   value="gif"
-                  defaultChecked
                   onSubmit={(e) => {
                     e.preventDefault();
                   }}
@@ -112,15 +113,11 @@ export default function Save() {
                   GIF
                 </label>
               </div>
-              <div>
-                <input type="radio" name="output" id="sprite-sheet" value="sprite-sheet" />
-                <label htmlFor="sprite-sheet">PNG SPRITE SHEET</label>
-              </div>
             </div>
           </div>
           {outputFileType === 'gif' ? (
             <div>
-              <label>
+              <label htmlFor="fps-select">
                 FPS:
                 <select
                   name="fps-select"
@@ -128,11 +125,23 @@ export default function Save() {
                   onChange={(e) => {
                     setFPS(parseInt(e.target.value));
                   }}
-                  defaultValue="20"
+                  defaultValue="10"
                 >
                   {getOptions().map((option) => option)}
                 </select>
               </label>
+              <br></br>
+              <label htmlFor="gif-background-color">
+                GIF Background Color:
+                <input
+                  type="color"
+                  name="gif-background-color"
+                  id="gif-background-color"
+                  defaultValue={context.gifBackgroundColor}
+                  onChange={(e) => context.setGifBackgroundColor(e.target.value)}
+                />
+              </label>
+              TRANSPARENT BACKGROUND NOT CURRENTLY AVAILABLE FOR GIF.
               <div>
                 <div>
                   OUTPUT SIZE: {context.width * outputMagnification} X {context.height * outputMagnification}

@@ -18,14 +18,14 @@ export default function CanvasView({ width, height, frameData, frameNum, dragEle
   useEffect(() => {
     if (ctx) {
       ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-      ctx.fillStyle = 'white';
+      ctx.fillStyle = context.previewBackgroundColor;
       ctx.fillRect(0, 0, width * 2, height * 2);
       frameData.forEach((square) => {
         ctx.fillStyle = square.color;
         ctx.fillRect((square.coords.x / magnification) * 2, (square.coords.y / magnification) * 2, 2, 2);
       });
     }
-  }, [frameData, ctx, height, width, magnification]);
+  }, [frameData, ctx, height, width, magnification, context.previewBackgroundColor]);
 
   const handleClick = () => {
     context.setCurrentFrameNumber(frameNum);

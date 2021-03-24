@@ -43,6 +43,15 @@ export default function Settings() {
             );
           })}
         </select>
+        <div className="settings-form-label">PREVIEW BACKGROUND</div>
+        <input
+          type="color"
+          name="preview-background"
+          id="preview-background"
+          defaultValue={context.previewBackgroundColor}
+          onChange={(e) => context.setPreviewBackgroundColor(e.target.value)}
+        />
+
         <div className="settings-form-label">BACKGROUND TRANSPARENCY</div>
         {context.transparentBackgroundColor === 'LIGHT' ? (
           <div

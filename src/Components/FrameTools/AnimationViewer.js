@@ -12,7 +12,7 @@ let centiseconds = 0;
 export default function AnimationViewer() {
   const canvasRef = useRef();
   const [ctx, setCtx] = useState(null);
-  const [fps, setFPS] = useState(20);
+  const [fps, setFPS] = useState(10);
   const context = useContext(GlobalContext);
   const width = context.width;
   const height = context.height;
@@ -37,7 +37,7 @@ export default function AnimationViewer() {
   useEffect(() => {
     if (ctx) {
       ctx.clearRect(0, 0, ctx.canvas.width * 2, ctx.canvas.height * 2);
-      ctx.fillStyle = 'white';
+      ctx.fillStyle = context.previewBackgroundColor;
       ctx.fillRect(0, 0, width * 2, height * 2);
       firstImage.forEach((square) => {
         ctx.fillStyle = square.color;
@@ -56,8 +56,7 @@ export default function AnimationViewer() {
   const animate = () => {
     if (!animationStopped) {
       if (centiseconds % Math.round(60 / fps) === 0 && centiseconds !== 0) {
-        //console.log(frames);
-        ctx.fillStyle = 'white';
+        ctx.fillStyle = context.previewBackgroundColor;
         ctx.clearRect(0, 0, ctx.canvas.width * 2, ctx.canvas.height * 2);
         ctx.fillRect(0, 0, ctx.canvas.width * 2, ctx.canvas.height * 2);
         frames[animationFrame]?.forEach((pixel) => {
@@ -90,7 +89,7 @@ export default function AnimationViewer() {
         <select
           name="fps"
           id="fps"
-          defaultValue={20}
+          defaultValue={10}
           onChange={(e) => {
             setFPS(parseInt(e.target.value));
           }}

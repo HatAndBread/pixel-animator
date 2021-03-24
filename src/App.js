@@ -23,6 +23,8 @@ function App() {
   const [pastStates, setPastStates] = useState([]);
   const [toolboxStyle, setToolboxStyle] = useState({});
   const [frameToolStyle, setFrameToolStyle] = useState({});
+  const [previewBackgroundColor, setPreviewBackgroundColor] = useState('#ffffff');
+  const [gifBackgroundColor, setGifBackgroundColor] = useState('#ffffff');
   const [transparentBackgroundColor, setTransparentBackgroundColor] = useState('LIGHT');
   const getLightBGColor = () => (transparentBackgroundColor === 'LIGHT' ? 'lightgray' : '#3d3d3c');
   const getDarkBGColor = () => (transparentBackgroundColor === 'LIGHT' ? 'darkgray' : '#2a2a2a');
@@ -63,7 +65,11 @@ function App() {
         getLightBGColor,
         getDarkBGColor,
         pastStates,
-        setPastStates
+        setPastStates,
+        previewBackgroundColor,
+        setPreviewBackgroundColor,
+        gifBackgroundColor,
+        setGifBackgroundColor
       }}
     >
       <div className="App">
