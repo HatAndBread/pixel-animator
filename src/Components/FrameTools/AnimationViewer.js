@@ -22,11 +22,12 @@ export default function AnimationViewer() {
   const getOptions = () => {
     const optionsArr = [];
     for (let i = 1; i <= 60; i++) {
-      optionsArr.push(
-        <option key={i} value={i}>
-          {i}
-        </option>
-      );
+      !(60 % i) &&
+        optionsArr.push(
+          <option key={i} value={i}>
+            {i}
+          </option>
+        );
     }
     return optionsArr;
   };
