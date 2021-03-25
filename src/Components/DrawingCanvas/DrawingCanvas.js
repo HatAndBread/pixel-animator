@@ -15,6 +15,7 @@ function DrawingCanvas({ magnification }) {
   const color = useContext(GlobalContext).color;
   const [mouseDown, setMouseDown] = useState(false);
   const [cutStartPoint, setCutStartPoint] = useState({ x: 0, y: 0 });
+  const [cutMagnification, setCutMagnification] = useState(null);
   const canvasRef = useRef(null);
   const sizeIndicator = useRef(null);
   const [ctx, setCtx] = useState(null);
@@ -150,6 +151,7 @@ function DrawingCanvas({ magnification }) {
         return;
       }
       case 'scissors': {
+        setCutMagnification(magnification);
         const newCoords = getTrueCoords(coords);
         setCutStartPoint(newCoords);
         const cutStuff = [];
@@ -161,25 +163,34 @@ function DrawingCanvas({ magnification }) {
             el.coords.x <= newCoords.x + context.scissorsWidth * magnification &&
             el.coords.y <= newCoords.y + context.scissorsHeight * magnification
           ) {
-            cutStuff.push(el);
+            cutStuff.push(JSON.parse(JSON.stringify(el)));
           }
         }
         canvasRef.current.style.cursor = `url("${glueCursor}"), default`;
         context.setTool('glue');
         context.setScissorData(cutStuff);
+        update(context.frames[context.currentFrameNumber]);
         return;
       }
       case 'glue': {
         const glueCoords = getTrueCoords(coords);
         const newSquares = JSON.parse(JSON.stringify(context.squares));
         const scissorDataCopy = JSON.parse(JSON.stringify(context.scissorData));
-        //console.log('NEW SQUARES', newSquares);
         for (let i = 0; i < scissorDataCopy.length; i++) {
-          scissorDataCopy[i].coords.x -= cutStartPoint.x;
-          scissorDataCopy[i].coords.y -= cutStartPoint.y;
+          let newCutStartPoint = JSON.parse(JSON.stringify(cutStartPoint));
+          if (magnification !== cutMagnification) {
+            scissorDataCopy[i].coords.x *= magnification / cutMagnification;
+            scissorDataCopy[i].coords.y *= magnification / cutMagnification;
+            newCutStartPoint.x *= magnification / cutMagnification;
+            newCutStartPoint.y *= magnification / cutMagnification;
+          }
+          scissorDataCopy[i].coords.x -= newCutStartPoint.x;
+          scissorDataCopy[i].coords.y -= newCutStartPoint.y;
           scissorDataCopy[i].coords.x += glueCoords.x;
           scissorDataCopy[i].coords.y += glueCoords.y;
+          console.log(scissorDataCopy);
         }
+        console.log(scissorDataCopy);
         for (let i = scissorDataCopy.length - 1; i >= 0; i--) {
           for (let j = 0; j < newSquares.length; j++) {
             if (
