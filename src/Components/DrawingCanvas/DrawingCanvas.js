@@ -136,7 +136,6 @@ function DrawingCanvas({ magnification }) {
         const dropperCoords = getTrueCoords(coords);
         for (let i = 0; i < squares.length; i++) {
           if (squares[i].coords.x === dropperCoords.x && squares[i].coords.y === dropperCoords.y) {
-            console.log(squares[i].color);
             context.setColor(squares[i].color);
             break;
           }
@@ -188,9 +187,7 @@ function DrawingCanvas({ magnification }) {
           scissorDataCopy[i].coords.y -= newCutStartPoint.y;
           scissorDataCopy[i].coords.x += glueCoords.x;
           scissorDataCopy[i].coords.y += glueCoords.y;
-          console.log(scissorDataCopy);
         }
-        console.log(scissorDataCopy);
         for (let i = scissorDataCopy.length - 1; i >= 0; i--) {
           for (let j = 0; j < newSquares.length; j++) {
             if (
