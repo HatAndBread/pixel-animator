@@ -7,11 +7,14 @@ import pencilCursor from '../../Assets/cursor-pencil.png';
 import eraserCursor from '../../Assets/cursor-eraser.png';
 import bucketCursor from '../../Assets/cursor-paint-bucket.png';
 import dropperCursor from '../../Assets/dropper-cursor.png';
+import glueCursor from '../../Assets/glue-cursor.png';
+import scissorsCursor from '../../Assets/scissors-cursor.png';
 
 function DrawingCanvas({ magnification }) {
   const context = useContext(GlobalContext);
   const color = useContext(GlobalContext).color;
   const [mouseDown, setMouseDown] = useState(false);
+  const [cutStartPoint, setCutStartPoint] = useState({ x: 0, y: 0 });
   const canvasRef = useRef(null);
   const sizeIndicator = useRef(null);
   const [ctx, setCtx] = useState(null);
@@ -147,7 +150,48 @@ function DrawingCanvas({ magnification }) {
         return;
       }
       case 'scissors': {
-        console.log(context.tool);
+        const newCoords = getTrueCoords(coords);
+        setCutStartPoint(newCoords);
+        const cutStuff = [];
+        for (let i = 0; i < context.frames[context.currentFrameNumber].length; i++) {
+          const el = context.frames[context.currentFrameNumber][i];
+          if (
+            el.coords.x >= newCoords.x &&
+            el.coords.y >= newCoords.y &&
+            el.coords.x <= newCoords.x + context.scissorsWidth * magnification &&
+            el.coords.y <= newCoords.y + context.scissorsHeight * magnification
+          ) {
+            cutStuff.push(el);
+          }
+        }
+        canvasRef.current.style.cursor = `url("${glueCursor}"), default`;
+        context.setTool('glue');
+        context.setScissorData(cutStuff);
+        return;
+      }
+      case 'glue': {
+        const glueCoords = getTrueCoords(coords);
+        const newSquares = JSON.parse(JSON.stringify(context.squares));
+        const scissorDataCopy = JSON.parse(JSON.stringify(context.scissorData));
+        //console.log('NEW SQUARES', newSquares);
+        for (let i = 0; i < scissorDataCopy.length; i++) {
+          scissorDataCopy[i].coords.x -= cutStartPoint.x;
+          scissorDataCopy[i].coords.y -= cutStartPoint.y;
+          scissorDataCopy[i].coords.x += glueCoords.x;
+          scissorDataCopy[i].coords.y += glueCoords.y;
+        }
+        for (let i = scissorDataCopy.length - 1; i >= 0; i--) {
+          for (let j = 0; j < newSquares.length; j++) {
+            if (
+              newSquares[j]?.coords?.x === scissorDataCopy[i]?.coords?.x &&
+              newSquares[j]?.coords?.y === scissorDataCopy[i]?.coords?.y
+            ) {
+              newSquares[j] = scissorDataCopy[i];
+              scissorDataCopy.splice(i, 1);
+            }
+          }
+        }
+        update(newSquares.concat(scissorDataCopy));
         return;
       }
       default:
@@ -166,12 +210,17 @@ function DrawingCanvas({ magnification }) {
     if (mouseDown) {
       handleTool(e);
     }
-    if (context.tool === 'pencil' || context.tool === 'eraser') {
+    if (context.tool === 'pencil' || context.tool === 'eraser' || context.tool === 'scissors') {
       sizeIndicator.current.hidden = false;
       sizeIndicator.current.style.top = `${e.clientY}px`;
       sizeIndicator.current.style.left = `${e.clientX}px`;
-      sizeIndicator.current.style.width = `${context.pencilSize * magnification}px`;
-      sizeIndicator.current.style.height = `${context.pencilSize * magnification}px`;
+      if (context.tool === 'scissors') {
+        sizeIndicator.current.style.width = `${context.scissorsWidth * magnification}px`;
+        sizeIndicator.current.style.height = `${context.scissorsHeight * magnification}px`;
+      } else {
+        sizeIndicator.current.style.width = `${context.pencilSize * magnification}px`;
+        sizeIndicator.current.style.height = `${context.pencilSize * magnification}px`;
+      }
     }
   };
   const handleTouchMove = (e) => {
@@ -190,6 +239,12 @@ function DrawingCanvas({ magnification }) {
         break;
       case 'dropper':
         canvasRef.current.style.cursor = `url("${dropperCursor}"), default`;
+        break;
+      case 'scissors':
+        canvasRef.current.style.cursor = `url("${scissorsCursor}"), default`;
+        break;
+      case 'glue':
+        canvasRef.current.style.cursor = `url("${glueCursor}"), default`;
         break;
       default:
         canvasRef.current.style.cursor = 'initial';

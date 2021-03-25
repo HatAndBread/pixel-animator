@@ -6,6 +6,8 @@ import dropperIconPath from '../../Assets/dropper.png';
 import bucketIconPath from '../../Assets/paint-bucket.png';
 import zoomInIconPath from '../../Assets/zoom-in.png';
 import zoomOutIconPath from '../../Assets/zoom-out.png';
+import scissorsIconPath from '../../Assets/scissors.png';
+import glueIconPath from '../../Assets/glue.png';
 import closerPath from '../../Assets/cancel.png';
 import SizeChooser from './SizeChooser';
 import { GlobalContext } from '../../App';
@@ -51,10 +53,24 @@ export default function Toolbox({ toolboxStyle, setToolboxStyle }) {
       <div className="color-picker-container">
         <label htmlFor="color-picker">CURRENT COLOR</label>
         <input type="color" id="color-picker" onInput={handleChange} value={context.color} />
-        {context.tool === 'pencil' || context.tool === 'eraser' ? <SizeChooser /> : ''}
+        {context.tool === 'pencil' || context.tool === 'eraser' || context.tool === 'scissors' ? <SizeChooser /> : ''}
       </div>
       <ToolboxIcon src={pencilIconPath} alt={'pencil'} onClick={() => setTool('pencil')} />
       <ToolboxIcon src={eraserIconPath} alt={'eraser'} onClick={() => setTool('eraser')} />
+      <ToolboxIcon
+        src={scissorsIconPath}
+        alt={'scissors'}
+        onClick={() => {
+          setTool('scissors');
+        }}
+      />
+      <ToolboxIcon
+        src={glueIconPath}
+        alt={'glue'}
+        onClick={() => {
+          setTool('glue');
+        }}
+      />
       <ToolboxIcon src={dropperIconPath} alt={'dropper'} onClick={() => setTool('dropper')} />
       <ToolboxIcon src={bucketIconPath} alt={'bucket'} onClick={() => setTool('bucket')} />
       <ToolboxIcon src={zoomInIconPath} alt={'zoom in'} onClick={() => handleMagnification(1)} />

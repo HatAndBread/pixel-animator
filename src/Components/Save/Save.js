@@ -141,7 +141,7 @@ export default function Save() {
                   onChange={(e) => context.setGifBackgroundColor(e.target.value)}
                 />
               </label>
-              TRANSPARENT BACKGROUND NOT CURRENTLY AVAILABLE FOR GIF.
+
               <div>
                 <div>
                   OUTPUT SIZE: {context.width * outputMagnification} X {context.height * outputMagnification}

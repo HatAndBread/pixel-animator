@@ -63,7 +63,7 @@ export default function floodFill(getTrueCoords, coords, magnification, context,
   const newSquares = [];
   for (let i = 0; i < grid.length; i++) {
     for (let j = 0; j < grid[i].length; j++) {
-      if (grid[i][j].color) {
+      if (grid[i][j]?.color) {
         newSquares.push({ coords: grid[i][j].coords, color: grid[i][j].color });
       }
     }

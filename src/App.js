@@ -25,7 +25,10 @@ function App() {
   const [frameToolStyle, setFrameToolStyle] = useState({});
   const [previewBackgroundColor, setPreviewBackgroundColor] = useState('#ffffff');
   const [gifBackgroundColor, setGifBackgroundColor] = useState('#ffffff');
+  const [scissorsWidth, setScissorsWidth] = useState(Math.round(width / 2));
+  const [scissorsHeight, setScissorsHeight] = useState(Math.round(height / 2));
   const [transparentBackgroundColor, setTransparentBackgroundColor] = useState('LIGHT');
+  const [scissorData, setScissorData] = useState(null);
   const getLightBGColor = () => (transparentBackgroundColor === 'LIGHT' ? 'lightgray' : '#3d3d3c');
   const getDarkBGColor = () => (transparentBackgroundColor === 'LIGHT' ? 'darkgray' : '#2a2a2a');
 
@@ -69,7 +72,13 @@ function App() {
         previewBackgroundColor,
         setPreviewBackgroundColor,
         gifBackgroundColor,
-        setGifBackgroundColor
+        setGifBackgroundColor,
+        scissorsWidth,
+        setScissorsWidth,
+        scissorData,
+        setScissorData,
+        scissorsHeight,
+        setScissorsHeight
       }}
     >
       <div className="App">
