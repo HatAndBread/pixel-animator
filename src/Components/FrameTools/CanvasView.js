@@ -78,13 +78,15 @@ export default function CanvasView({ width, height, frameData, frameNum, dragEle
   const handleDrop = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    const copy = [...context.frames];
     const dropAreaNum = e.target.dataset.frameNum;
-    const removedElement = copy.splice(dragElement, 1)[0];
-    copy.splice(dropAreaNum, 0, removedElement);
-    context.setFrames(copy);
-    context.setCurrentFrameNumber(dropAreaNum);
-    context.setSquares(copy[dropAreaNum]);
+    if (dropAreaNum || dropAreaNum === 0) {
+      const copy = [...context.frames];
+      const removedElement = copy.splice(dragElement, 1)[0];
+      copy.splice(dropAreaNum, 0, removedElement);
+      context.setFrames(copy);
+      context.setCurrentFrameNumber(dropAreaNum);
+      context.setSquares(copy[dropAreaNum]);
+    }
   };
 
   return (
