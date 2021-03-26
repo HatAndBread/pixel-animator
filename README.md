@@ -6,3 +6,8 @@ Todos:
 ⭐️ Allow transparent gifs.
 
 Try it <a href="https://pixel-art-animator.netlify.app/">here! ✨</a>
+
+Made with Pixel Art Animator in a couple of minutes👇
+
+<img src="https://github.com/HatAndBread/pixel-animator/blob/master/src/Assets/pixel-animator%20(44).gif?raw=true"/>
+
