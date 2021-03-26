@@ -47,6 +47,7 @@ export default function Save() {
           frames: context.frames,
           width: context.width,
           height: context.height,
+          magnification: context.magnification,
           pixelArtAnimator: true
         })
       ],

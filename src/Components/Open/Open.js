@@ -8,6 +8,7 @@ export default function Open() {
   const [fileOpenResult, setFileOpenResult] = useState(null);
   const handleClick = () => {
     if (fileOpenResult) {
+      context.setMagnification(fileOpenResult.magnification);
       context.setWidth(fileOpenResult.width);
       context.setHeight(fileOpenResult.height);
       context.setFrames(fileOpenResult.frames);
