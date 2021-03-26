@@ -12,11 +12,13 @@ export default function Save() {
   const [ctx, setCTX] = useState();
   const [outputMagnification, setOutputMagnification] = useState(1);
   const [outputFileType, setOutputFileType] = useState('png');
+  const [fileName, setFileName] = useState('');
   const [fps, setFPS] = useState(10);
   const gifRefs = useRef(context.frames.map(() => createRef()));
   useEffect(() => {
     setCTX(canvasRef.current.getContext('2d'));
   }, []);
+
   const getSpriteSheet = () => {
     ctx.clearRect(0, 0, ctx.canvas.width * outputMagnification, ctx.canvas.height * outputMagnification);
     context.frames.forEach((frame, index) => {
@@ -35,6 +37,22 @@ export default function Save() {
       saveAs(blob, 'pixel-animator.png');
     }, 'image/png');
     context.setOpenModal(null);
+  };
+
+  const saveProject = () => {
+    console.log('saving!');
+    const blob = new Blob(
+      [
+        JSON.stringify({
+          frames: context.frames,
+          width: context.width,
+          height: context.height,
+          pixelArtAnimator: true
+        })
+      ],
+      { type: 'text/plain;charset=utf-8' }
+    );
+    saveAs(blob, `${fileName}.json`);
   };
 
   const getOptions = () => {
@@ -96,7 +114,7 @@ export default function Save() {
           <div>
             <div className="input-radio" onChange={handleFileTypeChange}>
               <div>
-                <input type="radio" name="output" id="sprite-sheet" value="sprite-sheet" defaultChecked />
+                <input type="radio" name="output" id="sprite-sheet" value="png" defaultChecked />
                 <label htmlFor="sprite-sheet">PNG SPRITE SHEET</label>
               </div>
               <div>
@@ -113,9 +131,13 @@ export default function Save() {
                   GIF
                 </label>
               </div>
+              <div>
+                <input type="radio" name="output" id="project" value="project" />
+                <label htmlFor="sprite-sheet">SAVE AS PROJECT</label>
+              </div>
             </div>
           </div>
-          {outputFileType === 'gif' ? (
+          {outputFileType === 'gif' && (
             <div>
               <label htmlFor="fps-select">
                 FPS:
@@ -157,7 +179,8 @@ export default function Save() {
                 />
               </div>
             </div>
-          ) : (
+          )}
+          {outputFileType === 'png' && (
             <div>
               <div>
                 OUTPUT SIZE: {context.width * outputMagnification * context.frames.length} X{' '}
@@ -174,7 +197,21 @@ export default function Save() {
               />
             </div>
           )}
-          <button className="" onClick={outputFileType === 'gif' ? getGif : getSpriteSheet}>
+          {outputFileType === 'project' && (
+            <label>
+              FILE NAME:
+              <input type="text" name="file-name" id="file-name" onChange={(e) => setFileName(e.target.value)} />
+              .json
+            </label>
+          )}
+          <button
+            className=""
+            onClick={() => {
+              outputFileType === 'gif' && getGif();
+              outputFileType === 'png' && getSpriteSheet();
+              outputFileType === 'project' && saveProject();
+            }}
+          >
             SAVE
           </button>
         </div>

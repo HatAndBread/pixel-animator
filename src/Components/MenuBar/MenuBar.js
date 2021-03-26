@@ -6,6 +6,7 @@ import undoIconPath from '../../Assets/undo.png';
 import questionIconPath from '../../Assets/question.png';
 import toolboxIconPath from '../../Assets/toolkit.png';
 import frameIconPath from '../../Assets/film-strip.png';
+import openIconPath from '../../Assets/folder.png';
 import { GlobalContext } from '../../App';
 import { useContext } from 'react';
 
@@ -30,22 +31,13 @@ export default function MenuBar({ toolboxStyle, setToolboxStyle, frameToolStyle,
   return (
     <nav className="menu-bar">
       <div className="menu-bar-item">
-        <MenuBarIcon
-          filePath={fileIconPath}
-          alt={'file'}
-          onClick={() => {
-            context.setOpenModal('SAVE');
-          }}
-        />
+        <MenuBarIcon filePath={openIconPath} alt={'open'} onClick={() => context.setOpenModal('OPEN')} />
       </div>
       <div className="menu-bar-item">
-        <MenuBarIcon
-          filePath={settingsIconPath}
-          alt={'settings'}
-          onClick={() => {
-            context.setOpenModal('SETTINGS');
-          }}
-        />
+        <MenuBarIcon filePath={fileIconPath} alt={'file'} onClick={() => context.setOpenModal('SAVE')} />
+      </div>
+      <div className="menu-bar-item">
+        <MenuBarIcon filePath={settingsIconPath} alt={'settings'} onClick={() => context.setOpenModal('SETTINGS')} />
       </div>
       <div className="menu-bar-item goodbye">
         <MenuBarIcon filePath={toolboxIconPath} alt={'Toolbox'} onClick={handleToolboxClick} />

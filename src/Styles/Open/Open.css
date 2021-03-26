@@ -1,0 +1,4 @@
+.open-container {
+  display: flex;
+  flex-direction: column;
+}
