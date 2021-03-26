@@ -219,15 +219,17 @@ function DrawingCanvas({ magnification }) {
       handleTool(e);
     }
     if (context.tool === 'pencil' || context.tool === 'eraser' || context.tool === 'scissors') {
-      sizeIndicator.current.hidden = false;
-      sizeIndicator.current.style.top = `${e.clientY}px`;
-      sizeIndicator.current.style.left = `${e.clientX}px`;
-      if (context.tool === 'scissors') {
-        sizeIndicator.current.style.width = `${context.scissorsWidth * magnification}px`;
-        sizeIndicator.current.style.height = `${context.scissorsHeight * magnification}px`;
-      } else {
-        sizeIndicator.current.style.width = `${context.pencilSize * magnification}px`;
-        sizeIndicator.current.style.height = `${context.pencilSize * magnification}px`;
+      if (context.pencilSize > 1 || context.tool !== 'pencil') {
+        sizeIndicator.current.hidden = false;
+        sizeIndicator.current.style.top = `${e.clientY}px`;
+        sizeIndicator.current.style.left = `${e.clientX}px`;
+        if (context.tool === 'scissors') {
+          sizeIndicator.current.style.width = `${context.scissorsWidth * magnification}px`;
+          sizeIndicator.current.style.height = `${context.scissorsHeight * magnification}px`;
+        } else {
+          sizeIndicator.current.style.width = `${context.pencilSize * magnification}px`;
+          sizeIndicator.current.style.height = `${context.pencilSize * magnification}px`;
+        }
       }
     }
   };
