@@ -5,7 +5,7 @@ Pixel Art Animator is a simple single page React application for creating png sp
 Todos:
 ⭐️ Allow transparent gifs.
 
-Try it <a href="https://pixel-art-animator.netlify.app/">here! ✨</a>
+Try it <a href="https://www.pixel-art-animator.com/">here! ✨</a>
 
 Made with Pixel Art Animator in a couple of minutes👇
 
